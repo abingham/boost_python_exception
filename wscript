@@ -9,7 +9,7 @@ out = 'build_directory'
 # TODO: Need a better way to install the boost tool cleanly. This is silly.
 def options(opt):
     opt.load('compiler_cxx')
-        
+
     try:
         opt.load('boost')
     except ImportError:
@@ -33,20 +33,18 @@ def configure(conf):
 
     conf.env.append_value('CXXFLAGS', python_cflags)
     conf.env.append_value('LINKFLAGS', python_ldflags)
-    
+
     conf.check_boost(lib='system python',
                      mt=False,
                      stlib=False)
-
-    conf.check_boost(lib='unit_test',
-                     mt=False,
-                     stlib=False,
-                     uselib_store='BOOST_UNIT_TEST')
 
     # This lets us include our own headers with the correct path
     # prefixes.
     conf.env.append_value('INCLUDES', [os.path.abspath('src')])
 
+    conf.recurse('src/test')
+
 
 def build(bld):
+    bld.recurse('src/test')
     bld.recurse('src/boost_python_exception')
