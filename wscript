@@ -1,12 +1,20 @@
 import os
 import subprocess
+import sys
 
 top = '.'
 out = 'build_directory'
 
 
+# TODO: Need a better way to install the boost tool cleanly. This is silly.
 def options(opt):
-    opt.load('compiler_cxx')
+    try:
+        opt.load('compiler_cxx boost')
+    except ImportError:
+        print('Recived ImportError during option processing: {}'.format(
+            sys.exc_info()))
+        print('If this is about "boost", then you can (probably)'
+              'safely ignore it.')
 
 
 def configure(conf):
@@ -17,14 +25,19 @@ def configure(conf):
     python_ldflags = subprocess.check_output(
         [python_config, '--ldflags']).split()
 
-    conf.load('compiler_cxx')
+    conf.load('compiler_cxx boost')
+
+    conf.check_boost(lib='system python',
+                     mt=False,
+                     stlib=False)
+
+    conf.check_boost(lib='unit_test',
+                     mt=False,
+                     stlib=False,
+                     uselib_store='BOOST_UNIT_TEST')
+    
     conf.env.append_value('CXXFLAGS', python_cflags)
     conf.env.append_value('LINKFLAGS', python_ldflags)
-
-    # TODO: This is for boost.python linking. Need to find a more
-    # cross-platform/robust way to do this.
-    conf.env.append_value('LIBPATH', ['/usr/local/lib'])
-    conf.env.append_value('LIB', ['boost_python'])
 
     # This lets us include our own headers with the correct path
     # prefixes.

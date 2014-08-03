@@ -1,9 +1,9 @@
 def build(bld):
     bld.shlib(source='get_exception_info.cpp',
-              target='boost_python_exception')
+              target='boost_python_exception',
+              use='BOOST')
 
     bld.program(source='tests.cpp',
                 target='tests',
-                lib='boost_unit_test_framework',
                 defines=['BOOST_TEST_DYN_LINK'],
-                use='boost_python_exception')
+                use='boost_python_exception BOOST_UNIT_TEST')

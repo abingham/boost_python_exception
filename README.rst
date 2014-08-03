@@ -14,6 +14,7 @@ The build system is based on `waf
 <https://code.google.com/p/waf/>`_. You just need Python installed to
 run the build. Here are the steps::
 
+     % python waf update --files=boost
      % python waf configure
      % python waf build
 
