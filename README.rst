@@ -34,3 +34,19 @@ run the tests, first do a full build (see above.) Then::
     % ./build_directory/src/test/boost_python_exception_tests
 
 This will run all of the tests.
+
+Troubleshooting
+===============
+
+Matching up Python and Boost.Python versions
+--------------------------------------------
+
+The main place you might have trouble is making sure that you link
+against the same Python library as Boost.Python. This can be tricky,
+but use your system tools (e.g. ``otool``, ``ldd``, ``dependency
+walker``, and so forth) to figure it out. In general, this mismatch
+will not be apparent except that the test suite will die miserably
+rather than pass all tests gloriously.
+
+Hopefully we can find a way to figure this out for you (or at least
+detect the problem) sometime.
