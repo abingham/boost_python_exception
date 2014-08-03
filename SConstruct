@@ -30,15 +30,12 @@ env.Append(LIBS=[
 # Our own configuration
 
 env.Append(CPPPATH=['#/src'])
-env['INSTALL_DIR'] = '#/install'
 
 source_dirs = [
     os.path.join('src', 'boost_python_exception'),
-    os.path.join('src', 'test'),
 ]
 
 for source_dir in source_dirs:
     env.SConscript(
         os.path.join(source_dir, 'SConscript'),
-        exports='env',
-        variant_dir=os.path.join('build', source_dir))
+        exports='env')

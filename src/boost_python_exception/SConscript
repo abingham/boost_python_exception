@@ -2,12 +2,17 @@ import os
 
 Import('env')
 
+lib_name = 'boost_python_exception'
+
 lib = env.SharedLibrary(
-    'boost_python_exception',
+    lib_name,
     source=['get_exception_info.cpp'])
 
-env['bpex_library'] = env.Install(
-    '$INSTALL_DIR',
-    lib)
+test_env = env.Clone()
+test_env.AppendUnique(CPPDEFINES=['BOOST_TEST_DYN_LINK'])
+test_env.Append(LIBS=[lib_name])
+test_env.Append(LIBPATH=[os.path.abspath('.')])
 
-print(env['bpex_library'])[0]
+test_bin = test_env.Program(
+    'boost_python_exception_test',
+    source=['tests.cpp'])
