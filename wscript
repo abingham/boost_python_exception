@@ -8,8 +8,10 @@ out = 'build_directory'
 
 # TODO: Need a better way to install the boost tool cleanly. This is silly.
 def options(opt):
+    opt.load('compiler_cxx')
+        
     try:
-        opt.load('compiler_cxx boost')
+        opt.load('boost')
     except ImportError:
         print('Recived ImportError during option processing: {}'.format(
             sys.exc_info()))
