@@ -3,3 +3,7 @@
 *~
 *.os
 *.dylib
+.waf*
+.lock-waf*
+build_directory/*
+.prosjekt
