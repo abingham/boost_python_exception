@@ -1,0 +1,13 @@
+import os
+
+Import('env')
+
+lib = env.SharedLibrary(
+    'boost_python_exception',
+    source=['get_exception_info.cpp'])
+
+env['bpex_library'] = env.Install(
+    '$INSTALL_DIR',
+    lib)
+
+print(env['bpex_library'])[0]
