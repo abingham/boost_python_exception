@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 
@@ -25,15 +26,6 @@ env.Append(LIBS=[
     'boost_unit_test_framework',
 ])
 
-################################################################################
-# Build everything
-
-# Gives access to our code
-env.Append(CPPPATH=[
-    '..',
-])
-
-env.Append(CXXFLAGS=['-g', '-O0'])
-
-env.Program('boost_python_exception_test',
-            source=['tests.cpp'])
+env.SConscript(
+    os.path.join('src', 'test', 'SConscript'),
+    exports='env')

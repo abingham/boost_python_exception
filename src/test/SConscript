@@ -1,0 +1,14 @@
+Import(['env'])
+
+################################################################################
+# Build everything
+
+# Gives access to our code
+env.Append(CPPPATH=[
+    '..',
+])
+
+env.Append(CXXFLAGS=['-g', '-O0'])
+
+env.Program('boost_python_exception_test',
+            source=['tests.cpp'])
