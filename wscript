@@ -20,15 +20,20 @@ def options(opt):
 
 
 def configure(conf):
-    # TODO: Need to do something better for finding python-config.
-    python_config = '/usr/local/bin/python-config'
-    python_cflags = subprocess.check_output(
-        [python_config, '--cflags']).split()
-    python_ldflags = subprocess.check_output(
-        [python_config, '--ldflags']).split()
-
     conf.load('compiler_cxx boost')
 
+    # NOTE: Normally I think we'd use the python tool for python
+    # stuff, but it seems to not do the right WRT homebrew. Pain in
+    # the ass.
+    conf.find_program('python-config', var='PYTHON_CONFIG')
+    python_cflags = subprocess.check_output(
+        [conf.env.PYTHON_CONFIG, '--cflags']).split()
+    python_ldflags = subprocess.check_output(
+        [conf.env.PYTHON_CONFIG, '--ldflags']).split()
+
+    conf.env.append_value('CXXFLAGS', python_cflags)
+    conf.env.append_value('LINKFLAGS', python_ldflags)
+    
     conf.check_boost(lib='system python',
                      mt=False,
                      stlib=False)
@@ -37,9 +42,6 @@ def configure(conf):
                      mt=False,
                      stlib=False,
                      uselib_store='BOOST_UNIT_TEST')
-    
-    conf.env.append_value('CXXFLAGS', python_cflags)
-    conf.env.append_value('LINKFLAGS', python_ldflags)
 
     # This lets us include our own headers with the correct path
     # prefixes.
