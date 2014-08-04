@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_SUITE(get_exception_info)
 
 BOOST_AUTO_TEST_CASE(no_extant_exception)
 {
-    bp::tuple ex_info = bpe::getExceptionInfo();
+    bp::tuple ex_info = bpe::get_exception_info();
     for (int i = 0; i < 3; ++i)
         BOOST_CHECK(ex_info[i] == bp::object());
 }
@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(import_error)
         BOOST_REQUIRE(false);
     }
     catch (const bp::error_already_set&) {
-        bp::tuple ex_info = bpe::getExceptionInfo();
+        bp::tuple ex_info = bpe::get_exception_info();
         bp::object ex_type = ex_info[0];
         BOOST_CHECK(
             PyErr_GivenExceptionMatches(
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(index_error)
         BOOST_REQUIRE(false);
     }
     catch (const bp::error_already_set&) {
-        bp::tuple ex_info = bpe::getExceptionInfo();
+        bp::tuple ex_info = bpe::get_exception_info();
         bp::object ex_type = ex_info[0];
         BOOST_CHECK(
             PyErr_GivenExceptionMatches(
@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_SUITE(no_args)
 BOOST_AUTO_TEST_CASE(no_active_exception_is_all_nones)
 {
     PyErr_Clear();
-    std::string formatted = bpe::formatException();
+    std::string formatted = bpe::format_exception();
     BOOST_CHECK(formatted == "(None, None, None)");
 }
 
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(an_active_exception_has_information)
         BOOST_REQUIRE(false);
     }
     catch (const bp::error_already_set&) {
-        std::string formatted = bpe::formatException();
+        std::string formatted = bpe::format_exception();
         BOOST_CHECK(formatted != "(None, None, None)");
     }
 }
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_SUITE(explicit_exception)
 
 BOOST_AUTO_TEST_CASE(all_nones)
 {
-    std::string formatted = bpe::formatException(
+    std::string formatted = bpe::format_exception(
         bp::make_tuple(bp::object(),
                        bp::object(),
                        bp::object()));
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(all_nones)
 
 BOOST_AUTO_TEST_CASE(not_all_nones)
 {
-    std::string formatted = bpe::formatException(
+    std::string formatted = bpe::format_exception(
         bp::make_tuple(1, 2, 3));
     BOOST_CHECK(formatted == "(1, 2, 3)");
 }

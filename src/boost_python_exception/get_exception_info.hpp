@@ -16,7 +16,7 @@ namespace boost_python_exception {
       exception. If there is no current exception, all of the elements
       of the tuple will be ``None``.
  */
-boost::python::tuple getExceptionInfo();
+boost::python::tuple get_exception_info();
 
 }
 

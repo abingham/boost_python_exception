@@ -14,7 +14,7 @@ namespace boost_python_exception {
  * tuple ``ex_info``. This is well-behaved when the values are
  * ``None``.
  */
-std::string formatException(const bp::tuple& ex_info)
+std::string format_exception(const bp::tuple& ex_info)
 {
     bp::str formatted(ex_info);
     return bp::extract<std::string>(formatted);
@@ -23,11 +23,11 @@ std::string formatException(const bp::tuple& ex_info)
 /* Calls ``format_exception()`` with the return value of
  * ``getExceptionInfo()``.
  */
-std::string formatException()
+std::string format_exception()
 {
 
-    return formatException(
-        getExceptionInfo());
+    return format_exception(
+        get_exception_info());
 }
 
 

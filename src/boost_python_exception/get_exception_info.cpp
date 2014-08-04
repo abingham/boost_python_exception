@@ -21,7 +21,7 @@ bp::object ptr_to_obj(PyObject* ptr)
 
 namespace boost_python_exception {
 
-bp::tuple getExceptionInfo()
+bp::tuple get_exception_info()
 {
     /* This bears some explanation. Our plan is to:
 
