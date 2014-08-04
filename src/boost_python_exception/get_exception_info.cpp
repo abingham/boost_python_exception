@@ -23,6 +23,23 @@ namespace boost_python_exception {
 
 bp::tuple getExceptionInfo()
 {
+    /* This bears some explanation. Our plan is to:
+
+         a) Get the (possibly NULL) exception references from Python,
+         b) Keep references to them for ourselves, and
+         c) Give the original references back to Python via PyErr_Restore.
+
+       Since PyErr_Fetch gives us ownership of the exception info, and
+       since PyErr_Restore will try to *take* ownership (i.e. claim the
+       existing ref-count) when we use it, we need to increment the
+       ref-count on the exception objects so that we keep one reference
+       for ourselves. To do this, we use bp::borrowed which inc-refs for us.
+
+       If the exception objects are NULL, we of course don't do
+       anything but create some new references to None. PyErr_Restore
+       is well-behaved when you pass it NULLs.
+     */
+
     PyObject *t, *v, *tb;
 
     // This gives us pre-incremented references. We own the references
@@ -30,18 +47,8 @@ bp::tuple getExceptionInfo()
     PyErr_Fetch(&t, &v, &tb);
     PyErr_NormalizeException(&t, &v, &tb);
 
-    /* This bears some explanation. First, since t could be NULL
-     * (i.e. PyErr_Fetch returned NULL because there is no active
-     * exception), we use allow_null.
-     *
-     * Then, since we use borrowed because we want to create a new
-     * reference to the PyObject. Since we plan to give t back to
-     * Python via PyErr_Restore, and since PyErr_Restore will steal a
-     * reference, we have to create a new one for our own purposes.
-     *
-     * Finally,
-     */
-
+    // Take references to the exception objects, inc-ref'ing them so
+    // we can share them with PyErr_Restore.
     bp::object type = ::ptr_to_obj(t);
     bp::object value = ::ptr_to_obj(v);
     bp::object traceback = ::ptr_to_obj(tb);
