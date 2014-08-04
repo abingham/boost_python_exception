@@ -1,4 +1,4 @@
 def build(bld):
-    bld.shlib(source='get_exception_info.cpp format_exception.cpp',
+    bld.shlib(source=bld.path.ant_glob('*.cpp'),
               target='boost_python_exception',
               use='BOOST')
