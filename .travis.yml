@@ -10,5 +10,5 @@ before_install:
 script:
     - python waf update --files=boost
     - python waf configure
-    - python waf build
+    - python waf build -v
     - ./build_directory/src/test/boost_python_exception_tests
