@@ -4,7 +4,7 @@ compiler:
     - clang
     
 before_install:
-    - sudo apt-get -y install libboost-dev libboost-python-dev python-dev
+    - sudo apt-get -y install python-dev libboost-dev libboost-python-dev libboost-test-dev libboost-system-dev
     
 script:
     - python waf update --files=boost
