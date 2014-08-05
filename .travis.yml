@@ -1,0 +1,12 @@
+language: cpp
+compiler:
+    - gcc
+    - clang
+before_install:
+    - sudo apt-get update -qq
+    - sudo apt-get install libboost-python1.48-dev libboost-test1.48-dev libboost-system1.48-dev
+script:
+    - python waf update --files=boost
+    - python waf configure
+    - python waf build
+    - ./build_directory/src/test/boost_python_exception_tests
