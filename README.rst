@@ -1,3 +1,5 @@
+`Travis CI <https://travis-ci.org/abingham/boost_python_exception>`_ |build-status|
+
 ========================
  boost_python_exception
 ========================
@@ -50,3 +52,10 @@ rather than pass all tests gloriously.
 
 Hopefully we can find a way to figure this out for you (or at least
 detect the problem) sometime.
+
+.. Build status badge
+.. |build-status|
+   image:: https://secure.travis-ci.org/abingham/boost_python_exception.png
+           ?branch=master
+   :target: http://travis-ci.org/abingham/boost_python_exception
+   :alt: Build Status
