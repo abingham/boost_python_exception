@@ -10,4 +10,5 @@ script:
     - python waf update --files=boost
     - python waf configure
     - python waf build -v
-    - ./build_directory/src/test/boost_python_exception_tests
+    - LD_LIBRARY_PATH=build_directory/src/boost_python_exception/ ./build_directory/src/test/boost_python_exception_tests
+
