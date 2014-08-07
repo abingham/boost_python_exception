@@ -1,7 +1,11 @@
+#include <boost_python_exception/python_version.hpp>
+
+#include <iostream>
+
 #include <patchlevel.h> // python header which contains relevant information
 
-#include <boost_python_exception/python_version.hpp>
-#include <iostream>
+
+
 
 namespace boost_python_exception {
 
