@@ -4,22 +4,14 @@
 
 #include <boost/python/import.hpp>
 
+#include <test/fixtures/clear_python_errors.hpp>
+
+
 namespace bp=boost::python;
 namespace bpe=boost_python_exception;
 
-struct clear_python_errors {
-	clear_python_errors()
-	{
-		PyErr_Clear();
-	}
 
-	~clear_python_errors()
-	{
-		PyErr_Clear();
-	}
-};
-
-BOOST_FIXTURE_TEST_SUITE(get_exception_info, clear_python_errors)
+BOOST_FIXTURE_TEST_SUITE(get_exception_info, fixtures::clear_python_errors)
 
 BOOST_AUTO_TEST_CASE(no_extant_exception)
 {
