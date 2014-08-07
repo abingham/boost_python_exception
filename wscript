@@ -30,9 +30,17 @@ def configure(conf):
         [conf.env.PYTHON_CONFIG, '--cflags']).split()
     python_ldflags = subprocess.check_output(
         [conf.env.PYTHON_CONFIG, '--ldflags']).split()
+    python_libs = [l[2:] for l in subprocess.check_output(
+        [conf.env.PYTHON_CONFIG, '--libs']).split()]
 
     conf.env.append_value('CXXFLAGS', python_cflags)
     conf.env.append_value('LINKFLAGS', python_ldflags)
+    
+    # TODO: We have to list the libs separately like this so that we 
+    # can force them to come after the source file in the link command. 
+    # This appeases gcc. It's kludgy, but until we can get the python 
+    # tool working properly I think it's necessary.
+    conf.env.append_value('LIB', python_libs)
 
     conf.check_boost(lib='system python',
                      mt=False,
@@ -46,5 +54,5 @@ def configure(conf):
 
 
 def build(bld):
-    bld.recurse('src/test')
     bld.recurse('src/boost_python_exception')
+    bld.recurse('src/test')
