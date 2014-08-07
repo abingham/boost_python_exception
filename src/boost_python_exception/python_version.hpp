@@ -34,7 +34,7 @@ namespace boost_python_exception {
 	};
 
 	/**
-	 * @brief Compares to versions numbers for identity
+	 * @brief Compares two versions numbers for identity
 	 * @param lhs left hand side argument
 	 * @param rhs right hand side argument
 	 * @return true if both arguments are in equal major, minor and micro version
@@ -42,7 +42,7 @@ namespace boost_python_exception {
 	bool operator== (version const& lhs, version const& rhs);
 
 	/**
-	 * @brief Compares to versions numbers for identity
+	 * @brief Compares two versions numbers for identity
 	 * @param lhs left hand side argument
 	 * @param rhs right hand side argument
 	 * @return false if both arguments are in equal major, minor and micro version
@@ -50,7 +50,7 @@ namespace boost_python_exception {
 	bool operator!= (version const& lhs, version const& rhs);
 
 	/**
-	 * @brief Inserts a psapp::python::version into an output stream
+	 * @brief Inserts a boost_python_exception::version into an output stream
 	 * @param lhs Stream the version is inserted into
 	 * @param rhs Version to insert in stream
 	 * @return Stream passed as left hand argument to allow for chaining
@@ -58,7 +58,7 @@ namespace boost_python_exception {
 	std::ostream& operator<< (std::ostream& lhs, version const& rhs);
 
 	/**
-	 * @brief Returns the python version used to <i>build</i> psapp_python
+	 * @brief Returns the python version used to <i>build</i> boost_python_exception
 	 * @return A version string which includes the python version
 	 *
 	 * The following code extracts the version from the python headers:
