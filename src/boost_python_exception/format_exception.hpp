@@ -3,6 +3,8 @@
 
 #include <Python.h>
 
+#include <boost/python/tuple.hpp>
+
 #include <string>
 
 namespace boost {

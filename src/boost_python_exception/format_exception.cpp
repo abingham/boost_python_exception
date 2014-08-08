@@ -2,7 +2,6 @@
 
 #include <boost/python/extract.hpp>
 #include <boost/python/str.hpp>
-#include <boost/python/tuple.hpp>
 
 #include <boost_python_exception/get_exception_info.hpp>
 
