@@ -22,6 +22,11 @@ def options(opt):
 def configure(conf):
     conf.load('compiler_cxx boost python')
     conf.check_python_headers()
+
+    # We have to do this because the travis build mysteriously fails
+    # to link against libpython otherwise.
+    conf.env.append_value('LIB', conf.env['LIB_PYEMBED'])
+
     conf.check_boost(lib='system python',
                      mt=False,
                      stlib=False)
