@@ -1,22 +1,21 @@
 #include <boost_python_exception/exception_translator.hpp>
 
+#include <boost/foreach.hpp>
+
 using namespace boost::python;
 
 namespace boost_python_exception {
 
-void
-exception_translator::translate(const exception_info& excInfo)
+void exception_translator::translate(const exception_info& excInfo)
 {
     if (excInfo.type.is_none()) return;
 
-    for (ThrowMap::const_iterator itr = map_.begin();
-         itr != map_.end();
-         ++itr)
+    BOOST_FOREACH(const Mapping& mapping, map_)
     {
-        if (PyErr_GivenExceptionMatches(itr->first.ptr(),
+        if (PyErr_GivenExceptionMatches(mapping.first.ptr(),
                                         excInfo.type.ptr()))
         {
-            itr->second(excInfo);
+            mapping.second(excInfo);
 
             return;
         }
@@ -26,13 +25,11 @@ exception_translator::translate(const exception_info& excInfo)
 bool exception_translator::add(boost::python::object excType,
                                Thrower thrower)
 {
-    for (ThrowMap::iterator itr = map_.begin();
-            itr != map_.end();
-            ++itr)
+    BOOST_FOREACH(Mapping& mapping, map_)
     {
-        if (itr->first == excType)
+        if (mapping.first == excType)
         {
-            itr->second = thrower;
+            mapping.second = thrower;
             return true;
         }
     }
