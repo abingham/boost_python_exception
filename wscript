@@ -27,7 +27,7 @@ def configure(conf):
     # to link against libpython otherwise.
     conf.env.append_value('LIB', conf.env['LIB_PYEMBED'])
 
-    conf.check_boost(lib='system python',
+    conf.check_boost(lib='system python exception',
                      mt=False,
                      stlib=False)
 
