@@ -12,7 +12,7 @@
 
 namespace boost_python_exception {
 
-/** The base for all ackward exceptions. */
+/** The base for all boost_python_exception exceptions. */
 class Exception : public virtual boost::exception,
                   public virtual std::exception
 {};
