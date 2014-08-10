@@ -5,24 +5,18 @@ using namespace boost::python;
 namespace boost_python_exception {
 
 void
-exception_translator::translate(tuple excInfo)
+exception_translator::translate(const exception_info& excInfo)
 {
-    object exception = excInfo[0];
-    object value = excInfo[1];
-    object traceBack = excInfo[2];
-
-    if (exception.is_none()) return;
+    if (excInfo.type.is_none()) return;
 
     for (ThrowMap::const_iterator itr = map_.begin();
          itr != map_.end();
          ++itr)
     {
         if (PyErr_GivenExceptionMatches(itr->first.ptr(),
-                                        exception.ptr()))
+                                        excInfo.type.ptr()))
         {
-            itr->second(exception,
-                        value,
-                        traceBack);
+            itr->second(excInfo);
 
             return;
         }
