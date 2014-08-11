@@ -75,9 +75,9 @@ public:
     bool remove(boost::python::object excType);
 
 private:
-    typedef std::pair<boost::python::object, Thrower> Mapping;
-    typedef std::vector<Mapping> ThrowMap;
-    ThrowMap map_;
+    typedef std::pair<boost::python::object, Thrower> mapping;
+    typedef std::vector<mapping> throw_map;
+    throw_map map_;
 };
 
 /* An ``exception_translator::Thrower`` implementation that simply
