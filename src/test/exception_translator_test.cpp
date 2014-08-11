@@ -15,8 +15,9 @@ BOOST_AUTO_TEST_SUITE( exception_translator )
 BOOST_AUTO_TEST_CASE( add )
 {
     bpe::exception_translator e;
-    e.add( bpe::builtins().attr("IndexError"),
-           bpe::throw_with_python_info<bpe::IndexError> );
+    BOOST_CHECK(
+        !e.add(bpe::builtins().attr("IndexError"),
+               bpe::throw_with_python_info<bpe::IndexError>));
 
     bp::list l;
 
@@ -45,7 +46,8 @@ BOOST_AUTO_TEST_CASE( remove )
             bpe::IndexError);
     }
 
-    e.remove(bpe::builtins().attr("IndexError"));
+    BOOST_CHECK(
+        e.remove(bpe::builtins().attr("IndexError")));
 
     try {
         l[5];
