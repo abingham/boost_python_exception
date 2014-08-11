@@ -8,24 +8,24 @@ namespace bp=boost::python;
 namespace bpe=boost_python_exception;
 
 struct clear_python_errors {
-	clear_python_errors()
-	{
-		PyErr_Clear();
-	}
+    clear_python_errors()
+        {
+            PyErr_Clear();
+        }
 
-	~clear_python_errors()
-	{
-		PyErr_Clear();
-	}
+    ~clear_python_errors()
+        {
+            PyErr_Clear();
+        }
 };
 
 BOOST_FIXTURE_TEST_SUITE(get_exception_info, clear_python_errors)
 
 BOOST_AUTO_TEST_CASE(no_extant_exception)
 {
-    bp::tuple ex_info = bpe::get_exception_info();
+    bpe::exception_info ex_info = bpe::get_exception_info();
     for (int i = 0; i < 3; ++i)
-        BOOST_CHECK(ex_info[i] == bp::object());
+        BOOST_CHECK(ex_info.type == bp::object());
 }
 
 BOOST_AUTO_TEST_CASE(import_error)
@@ -35,8 +35,8 @@ BOOST_AUTO_TEST_CASE(import_error)
         BOOST_REQUIRE(false);
     }
     catch (const bp::error_already_set&) {
-        bp::tuple ex_info = bpe::get_exception_info();
-        bp::object ex_type = ex_info[0];
+        bpe::exception_info ex_info = bpe::get_exception_info();
+        bp::object ex_type = ex_info.type;
         BOOST_CHECK(
             PyErr_GivenExceptionMatches(
                 PyExc_ImportError,
@@ -53,8 +53,8 @@ BOOST_AUTO_TEST_CASE(index_error)
         BOOST_REQUIRE(false);
     }
     catch (const bp::error_already_set&) {
-        bp::tuple ex_info = bpe::get_exception_info();
-        bp::object ex_type = ex_info[0];
+        bpe::exception_info ex_info = bpe::get_exception_info();
+        bp::object ex_type = ex_info.type;
         BOOST_CHECK(
             PyErr_GivenExceptionMatches(
                 PyExc_IndexError,

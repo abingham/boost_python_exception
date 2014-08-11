@@ -2,6 +2,7 @@
 
 #include <boost/python/list.hpp>
 
+#include <boost_python_exception/exception_info.hpp>
 #include <boost_python_exception/format_exception.hpp>
 
 namespace bp=boost::python;
@@ -37,16 +38,18 @@ BOOST_AUTO_TEST_SUITE(explicit_exception)
 BOOST_AUTO_TEST_CASE(all_nones)
 {
     std::string formatted = bpe::format_exception(
-        bp::make_tuple(bp::object(),
-                       bp::object(),
-                       bp::object()));
+        bpe::exception_info(bp::object(),
+                            bp::object(),
+                            bp::object()));
     BOOST_CHECK(formatted == "(None, None, None)");
 }
 
 BOOST_AUTO_TEST_CASE(not_all_nones)
 {
     std::string formatted = bpe::format_exception(
-        bp::make_tuple(1, 2, 3));
+        bpe::exception_info(bp::object(1),
+                            bp::object(2),
+                            bp::object(3)));
     BOOST_CHECK(formatted == "(1, 2, 3)");
 }
 

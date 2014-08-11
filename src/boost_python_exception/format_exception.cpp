@@ -2,6 +2,7 @@
 
 #include <boost/python/extract.hpp>
 #include <boost/python/str.hpp>
+#include <boost/python/tuple.hpp>
 
 #include <boost_python_exception/get_exception_info.hpp>
 
@@ -13,9 +14,14 @@ namespace boost_python_exception {
  * tuple ``ex_info``. This is well-behaved when the values are
  * ``None``.
  */
-std::string format_exception(const bp::tuple& ex_info)
+std::string format_exception(const exception_info& ex_info)
 {
-    bp::str formatted(ex_info);
+    bp::str formatted(
+        bp::make_tuple(
+            ex_info.type,
+            ex_info.value,
+            ex_info.traceback));
+
     return bp::extract<std::string>(formatted);
 }
 
@@ -24,7 +30,6 @@ std::string format_exception(const bp::tuple& ex_info)
  */
 std::string format_exception()
 {
-
     return format_exception(
         get_exception_info());
 }
