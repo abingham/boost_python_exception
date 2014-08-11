@@ -4,8 +4,6 @@
 /** C++ counterparts to the standard Python exceptions.
  */
 
-#include <Python.h>
-
 #include <exception>
 
 #include <boost/exception/exception.hpp>
