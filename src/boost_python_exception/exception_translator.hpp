@@ -53,7 +53,7 @@ public:
 
     void translate(const exception_info& excInfo);
 
-    typedef boost::function<void(const exception_info&)> Thrower;
+    typedef boost::function<void(const exception_info&)> thrower;
 
     /* Add a translator for ``excType``.
 
@@ -63,7 +63,7 @@ public:
        otherwise.
      */
     bool add(boost::python::object excType,
-             Thrower thrower);
+             thrower thrower);
 
     /* Remove the translator for ``excType``, if any.
 
@@ -75,12 +75,12 @@ public:
     bool remove(boost::python::object excType);
 
 private:
-    typedef std::pair<boost::python::object, Thrower> mapping;
+    typedef std::pair<boost::python::object, thrower> mapping;
     typedef std::vector<mapping> exception_translators;
     exception_translators exception_translators_;
 };
 
-/* An ``exception_translator::Thrower`` implementation that simply
+/* An ``exception_translator::thrower`` implementation that simply
    throws a default-constructed instace of ``ExcType``.
  */
 template <typename ExceptionType>
@@ -94,7 +94,7 @@ void throw_(const exception_info&)
 */
 typedef boost::error_info<struct tag_exc_info, exception_info> exc_info;
 
-/* An ``exception_translator::Thrower`` implementation that throws a
+/* An ``exception_translator::thrower`` implementation that throws a
    default-constructed instance of ``ExceptionType`` with an ``exc_info``
    attached containing the ``exception_info``.
  */
