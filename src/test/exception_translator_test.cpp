@@ -28,14 +28,14 @@ BOOST_AUTO_TEST_CASE( add )
     bpe::exception_translator e;
     BOOST_CHECK(
         !e.add(bpe::builtins().attr("IndexError"),
-               bpe::throw_with_python_info<bpe::IndexError>));
+               bpe::throw_with_python_info<bpe::index_error>));
 
     try {
         generate_index_error();
     } catch (const bp::error_already_set&) {
         BOOST_CHECK_THROW(
             e.translate(bpe::get_exception_info()),
-            bpe::IndexError);
+            bpe::index_error);
     }
 }
 
@@ -43,18 +43,18 @@ BOOST_AUTO_TEST_CASE( multiple_adds )
 {
     bpe::exception_translator e;
     e.add(bpe::builtins().attr("IndexError"),
-          bpe::throw_with_python_info<bpe::IndexError>);
+          bpe::throw_with_python_info<bpe::index_error>);
 
     BOOST_CHECK(
         e.add(bpe::builtins().attr("IndexError"),
-              bpe::throw_with_python_info<bpe::KeyError>));
+              bpe::throw_with_python_info<bpe::key_error>));
 
     try {
         generate_index_error();
     } catch (const bp::error_already_set&) {
         BOOST_CHECK_THROW(
             e.translate(bpe::get_exception_info()),
-            bpe::KeyError);
+            bpe::key_error);
     }
 }
 
@@ -62,14 +62,14 @@ BOOST_AUTO_TEST_CASE( remove )
 {
     bpe::exception_translator e;
     e.add( bpe::builtins().attr("IndexError"),
-           bpe::throw_with_python_info<bpe::IndexError> );
+           bpe::throw_with_python_info<bpe::index_error> );
 
     try {
         generate_index_error();
     } catch (const bp::error_already_set&) {
         BOOST_CHECK_THROW(
             e.translate(bpe::get_exception_info()),
-            bpe::IndexError);
+            bpe::index_error);
     }
 
     BOOST_CHECK(
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE( remove )
         try {
             e.translate(bpe::get_exception_info());
         }
-        catch (bpe::IndexError const&) {
+        catch (bpe::index_error const&) {
             BOOST_CHECK(false);
         }
     }
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE( remove_multiple_times )
 {
     bpe::exception_translator e;
     e.add( bpe::builtins().attr("IndexError"),
-           bpe::throw_with_python_info<bpe::IndexError> );
+           bpe::throw_with_python_info<bpe::index_error> );
 
     BOOST_CHECK(
         e.remove(bpe::builtins().attr("IndexError")));
