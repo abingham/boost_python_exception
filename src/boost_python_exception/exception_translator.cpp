@@ -10,7 +10,7 @@ void exception_translator::translate(const exception_info& excInfo)
 {
     if (excInfo.type.is_none()) return;
 
-    BOOST_FOREACH(const mapping& mapping, map_)
+    BOOST_FOREACH(const mapping& mapping, exception_translators_)
     {
         if (PyErr_GivenExceptionMatches(mapping.first.ptr(),
                                         excInfo.type.ptr()))
@@ -25,7 +25,7 @@ void exception_translator::translate(const exception_info& excInfo)
 bool exception_translator::add(boost::python::object excType,
                                Thrower thrower)
 {
-    BOOST_FOREACH(mapping& mapping, map_)
+    BOOST_FOREACH(mapping& mapping, exception_translators_)
     {
         if (mapping.first == excType)
         {
@@ -34,19 +34,19 @@ bool exception_translator::add(boost::python::object excType,
         }
     }
 
-    map_.push_back(mapping(excType, thrower));
+    exception_translators_.push_back(mapping(excType, thrower));
     return false;
 }
 
 bool exception_translator::remove(boost::python::object excType)
 {
-    for (throw_map::iterator itr = map_.begin();
-            itr != map_.end();
-            ++itr)
+    for (exception_translators::iterator itr = exception_translators_.begin();
+         itr != exception_translators_.end();
+         ++itr)
     {
         if (itr->first == excType)
         {
-            map_.erase(itr);
+            exception_translators_.erase(itr);
             return true;
         }
     }

@@ -76,8 +76,8 @@ public:
 
 private:
     typedef std::pair<boost::python::object, Thrower> mapping;
-    typedef std::vector<mapping> throw_map;
-    throw_map map_;
+    typedef std::vector<mapping> exception_translators;
+    exception_translators exception_translators_;
 };
 
 /* An ``exception_translator::Thrower`` implementation that simply
