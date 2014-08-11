@@ -18,8 +18,8 @@ namespace boost_python_exception {
 
 /** A registry of python-to-c++ exception translators.
 
-    The basic concept here is map of Python exception class references
-    to callables which are invoked when that exception is
+    The basic concept here is a map of Python exception class
+    references to callables which are invoked when that exception is
     encountered. To use this, you create an instance and add
     translation handlers via the ``add()`` method. Then when you
     detect a Python exception (e.g. via
@@ -28,11 +28,11 @@ namespace boost_python_exception {
 
     In general it looks like this::
 
-        exception_translator xlat;
+        exception_translator translator;
 
         // Configure the translator to throw IndexError when a Python
         // IndexError is detected.
-        xlat.add(
+        translator.add(
             bp::object(
                bp::handle<>(
                    bp::borrowed(PyExc_IndexError))),
@@ -41,10 +41,10 @@ namespace boost_python_exception {
         . . .
 
         try {
-            foo();
+            some_boost_python_calls();
         }
         catch (const bp::error_already_set&) {
-            xlat.translate(get_exception_info());
+            translator.translate(get_exception_info());
         }
  */
 class exception_translator
@@ -83,10 +83,10 @@ private:
 /* An ``exception_translator::Thrower`` implementation that simply
    throws a default-constructed instace of ``ExcType``.
  */
-template <typename ExcType>
+template <typename ExceptionType>
 void throw_(const exception_info&)
 {
-    throw ExcType();
+    throw ExceptionType();
 }
 
 /* A boost::exception error_info for carrying Python exception
@@ -95,13 +95,13 @@ void throw_(const exception_info&)
 typedef boost::error_info<struct tag_exc_info, exception_info> exc_info;
 
 /* An ``exception_translator::Thrower`` implementation that throws a
-   default-constructed instance of ``ExcType`` with an ``exc_info``
+   default-constructed instance of ``ExceptionType`` with an ``exc_info``
    attached containing the ``exception_info``.
  */
-template <typename ExcType>
+template <typename ExceptionType>
 void throw_with_python_info(const exception_info& e)
 {
-    throw ExcType() << exc_info(e);
+    throw ExceptionType() << exc_info(e);
 }
 
 }
