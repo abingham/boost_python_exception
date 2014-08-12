@@ -5,14 +5,16 @@
 #include <boost/python/import.hpp>
 #include <boost_python_exception/clear_exception.hpp>
 
+#include "clear_python_errors.hpp"
+
 namespace bp=boost::python;
 namespace bpe=boost_python_exception;
 
-BOOST_AUTO_TEST_SUITE( clear_exception )
+BOOST_FIXTURE_TEST_SUITE( clear_exception,
+                          bpe::test::clear_python_errors )
 
 BOOST_AUTO_TEST_CASE( no_extant_exception )
 {
-    PyErr_Clear();
     BOOST_CHECK(!PyErr_Occurred());
 
     bpe::clear_exception();
