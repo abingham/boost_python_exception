@@ -6,7 +6,7 @@ using namespace boost::python;
 
 namespace boost_python_exception {
 
-void exception_translator::translate(const exception_info& excInfo)
+void exception_translator::translate(const exception_info& excInfo) const
 {
     if (excInfo.type.is_none()) return;
 
@@ -23,7 +23,7 @@ void exception_translator::translate(const exception_info& excInfo)
 }
 
 bool exception_translator::add(boost::python::object excType,
-                               Thrower thrower)
+                               thrower thrower)
 {
     BOOST_FOREACH(mapping& mapping, exception_translators_)
     {
