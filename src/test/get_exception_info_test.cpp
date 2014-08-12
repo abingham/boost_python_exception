@@ -2,6 +2,7 @@
 
 #include <boost/python/import.hpp>
 
+#include <boost_python_exception/clear_exception.hpp>
 #include <boost_python_exception/get_exception_info.hpp>
 
 namespace bp=boost::python;
@@ -10,12 +11,12 @@ namespace bpe=boost_python_exception;
 struct clear_python_errors {
     clear_python_errors()
         {
-            PyErr_Clear();
+            bpe::clear_exception();
         }
 
     ~clear_python_errors()
         {
-            PyErr_Clear();
+            bpe::clear_exception();
         }
 };
 
