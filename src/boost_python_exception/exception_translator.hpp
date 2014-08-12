@@ -51,7 +51,7 @@ class exception_translator
 {
 public:
 
-    void translate(const exception_info& excInfo);
+    void translate(const exception_info& excInfo) const;
 
     typedef boost::function<void(const exception_info&)> thrower;
 

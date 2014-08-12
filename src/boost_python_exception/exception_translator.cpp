@@ -6,7 +6,7 @@ using namespace boost::python;
 
 namespace boost_python_exception {
 
-void exception_translator::translate(const exception_info& excInfo)
+void exception_translator::translate(const exception_info& excInfo) const
 {
     if (excInfo.type.is_none()) return;
 
