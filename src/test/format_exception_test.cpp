@@ -5,6 +5,8 @@
 #include <boost_python_exception/exception_info.hpp>
 #include <boost_python_exception/format_exception.hpp>
 
+#include "clear_python_errors.hpp"
+
 namespace bp=boost::python;
 namespace bpe=boost_python_exception;
 
@@ -12,7 +14,8 @@ BOOST_AUTO_TEST_SUITE(format_exception)
 
 BOOST_AUTO_TEST_SUITE(no_args)
 
-BOOST_AUTO_TEST_CASE(no_active_exception_is_all_nones)
+BOOST_FIXTURE_TEST_CASE(no_active_exception_is_all_nones,
+                        bpe::test::clear_python_errors)
 {
     PyErr_Clear();
     std::string formatted = bpe::format_exception();
