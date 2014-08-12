@@ -17,9 +17,9 @@ void execute_python_code_in_main_module(std::string const & python_code)
     boost::python::exec(python_code.c_str(), dict);
 }
 
-struct fixture
+struct initialize_exception_translator
 {
-    fixture() :
+    initialize_exception_translator() :
         translator (bpe::create_standard_exception_translator())
         {}
 
@@ -43,7 +43,8 @@ struct fixture
 
 }
 
-BOOST_FIXTURE_TEST_SUITE(standard_exception_translator, fixture)
+BOOST_FIXTURE_TEST_SUITE(standard_exception_translator,
+                         initialize_exception_translator)
 
 BOOST_AUTO_TEST_CASE( attribute_error )
 {
