@@ -9,7 +9,7 @@ BOOST_AUTO_TEST_SUITE(traceback_step)
 
 BOOST_AUTO_TEST_CASE(output_to_stream)
 {
-	boost_python_exception::traceback_step info = {7, "test.py", "test()"};
+	boost_python_exception::traceback_step const info = {7, "test.py", "test()"};
 
 	std::ostringstream actual;
 	actual << info;
