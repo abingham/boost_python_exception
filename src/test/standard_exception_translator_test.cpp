@@ -24,14 +24,14 @@ struct initialize_exception_translator
         {}
 
     template <class CPPExceptionType>
-    void exception_test(const std::string& python_exception)
+    void exception_test(std::string const & python_exception)
         {
             try {
                 execute_python_code_in_main_module(
                     "raise " + python_exception + "()");
                 BOOST_CHECK(false);
             }
-            catch (const bp::error_already_set&) {
+            catch (bp::error_already_set const &) {
                 BOOST_CHECK_THROW(
                     translator.translate(bpe::get_exception_info()),
                     CPPExceptionType);

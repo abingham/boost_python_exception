@@ -12,7 +12,7 @@ exception_translator create_standard_exception_translator()
 {
     exception_translator translator;
 
-    typedef std::map<const std::string, exception_translator::thrower> translation_map;
+    typedef std::map<std::string const, exception_translator::thrower> translation_map;
 
     // To add new translations, simply update the contents of this map.
     translation_map translations =
@@ -28,7 +28,7 @@ exception_translator create_standard_exception_translator()
         ("StopIteration", throw_with_python_info<stop_iteration>)
         ;
 
-    BOOST_FOREACH(const translation_map::value_type& mapping, translations)
+    BOOST_FOREACH(translation_map::value_type const & mapping, translations)
     {
         translator.add(
             builtins().attr(mapping.first.c_str()),

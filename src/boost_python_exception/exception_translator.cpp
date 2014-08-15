@@ -6,11 +6,11 @@ using namespace boost::python;
 
 namespace boost_python_exception {
 
-void exception_translator::translate(const exception_info& excInfo) const
+void exception_translator::translate(exception_info const & excInfo) const
 {
     if (excInfo.type.is_none()) return;
 
-    BOOST_FOREACH(const mapping& mapping, exception_translators_)
+    BOOST_FOREACH(mapping const & mapping, exception_translators_)
     {
         if (PyErr_GivenExceptionMatches(mapping.first.ptr(),
                                         excInfo.type.ptr()))

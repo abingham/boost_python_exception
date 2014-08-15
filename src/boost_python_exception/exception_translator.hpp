@@ -51,9 +51,9 @@ class exception_translator
 {
 public:
 
-    void translate(const exception_info& excInfo) const;
+    void translate(exception_info const & excInfo) const;
 
-    typedef boost::function<void(const exception_info&)> thrower;
+    typedef boost::function<void(exception_info const &)> thrower;
 
     /* Add a translator for ``excType``.
 
@@ -84,7 +84,7 @@ private:
    throws a default-constructed instace of ``ExcType``.
  */
 template <typename ExceptionType>
-void throw_(const exception_info&)
+void throw_(exception_info const &)
 {
     throw ExceptionType();
 }
@@ -99,7 +99,7 @@ typedef boost::error_info<struct tag_exc_info, exception_info> exc_info;
    attached containing the ``exception_info``.
  */
 template <typename ExceptionType>
-void throw_with_python_info(const exception_info& e)
+void throw_with_python_info(exception_info const & e)
 {
     throw ExceptionType() << exc_info(e);
 }

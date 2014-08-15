@@ -8,7 +8,8 @@
 #include <boost/python/exec.hpp>
 
 #include <boost_python_exception/get_exception_info.hpp>
-#include <test/fixtures/clear_python_errors.hpp>
+
+#include "helpers/fixtures/clear_python_errors.hpp"
 
 namespace bp = boost::python;
 namespace bpe = boost_python_exception;
@@ -47,7 +48,7 @@ namespace {
 
 }
 
-BOOST_FIXTURE_TEST_SUITE(extract_traceback, fixtures::clear_python_errors)
+BOOST_FIXTURE_TEST_SUITE(extract_traceback, test::fixtures::clear_python_errors)
 
 BOOST_AUTO_TEST_CASE(no_error)
 {

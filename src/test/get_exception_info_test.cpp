@@ -4,13 +4,13 @@
 
 #include <boost_python_exception/get_exception_info.hpp>
 
-#include "clear_python_errors.hpp"
+#include "helpers/fixtures/clear_python_errors.hpp"
 
 namespace bp=boost::python;
 namespace bpe=boost_python_exception;
 
 BOOST_FIXTURE_TEST_SUITE(get_exception_info,
-                         bpe::test::clear_python_errors)
+                         test::fixtures::clear_python_errors)
 
 BOOST_AUTO_TEST_CASE(no_extant_exception)
 {
@@ -41,8 +41,8 @@ BOOST_AUTO_TEST_CASE(import_error)
 BOOST_AUTO_TEST_CASE(index_error)
 {
     try {
-        bp::list l;
-        bp::object item = l[1234];
+        bp::list const l;
+        bp::object const item = l[1234];
         BOOST_REQUIRE(false);
     }
     catch (const bp::error_already_set&) {

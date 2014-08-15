@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE( add )
 
     try {
         generate_index_error();
-    } catch (const bp::error_already_set&) {
+    } catch (bp::error_already_set const &) {
         BOOST_CHECK_THROW(
             e.translate(bpe::get_exception_info()),
             bpe::index_error);
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE( multiple_adds )
 
     try {
         generate_index_error();
-    } catch (const bp::error_already_set&) {
+    } catch (bp::error_already_set const &) {
         BOOST_CHECK_THROW(
             e.translate(bpe::get_exception_info()),
             bpe::key_error);

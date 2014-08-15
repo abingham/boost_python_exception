@@ -5,13 +5,13 @@
 #include <boost/python/import.hpp>
 #include <boost_python_exception/clear_exception.hpp>
 
-#include "clear_python_errors.hpp"
+#include "helpers/fixtures/clear_python_errors.hpp"
 
 namespace bp=boost::python;
 namespace bpe=boost_python_exception;
 
 BOOST_FIXTURE_TEST_SUITE( clear_exception,
-                          bpe::test::clear_python_errors )
+                          test::fixtures::clear_python_errors )
 
 BOOST_AUTO_TEST_CASE( no_extant_exception )
 {
