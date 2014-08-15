@@ -1,6 +1,8 @@
 #ifndef INCLUDE_BOOST_PYTHON_EXCEPTION_FORMAT_EXCEPTION_HPP
 #define INCLUDE_BOOST_PYTHON_EXCEPTION_FORMAT_EXCEPTION_HPP
 
+#include <Python.h>
+
 #include <string>
 
 namespace boost_python_exception {
