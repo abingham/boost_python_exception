@@ -9,18 +9,18 @@ namespace boost_python_exception {
  * @brief Collects python objects which contain exception details
  */
 struct exception_info {
-	/**
-	 * @brief Exception type
-	 */
-	boost::python::object const type;
-	/**
-	 * @brief Exception value
-	 */
-	boost::python::object const value;
-	/**
-	 * @brief Exception traceback
-	 */
-	boost::python::object const traceback;
+    /**
+     * @brief Exception type
+     */
+    boost::python::object const type;
+    /**
+     * @brief Exception value
+     */
+    boost::python::object const value;
+    /**
+     * @brief Exception traceback
+     */
+    boost::python::object const traceback;
 
     /**
      * @brief Construct a new exception_info instance

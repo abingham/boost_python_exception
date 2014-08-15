@@ -12,4 +12,7 @@ def build(bld):
                 defines=['BOOST_TEST_DYN_LINK'],
                 use='boost_python_exception BOOST_UNIT_TEST',
                 features='pyembed')
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
