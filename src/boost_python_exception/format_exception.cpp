@@ -10,11 +10,7 @@ namespace bp=boost::python;
 
 namespace boost_python_exception {
 
-/* Generate a nicely formatted string for the (type, value, traceback)
- * tuple ``ex_info``. This is well-behaved when the values are
- * ``None``.
- */
-std::string format_exception(const exception_info& ex_info)
+std::string format_exception(exception_info const & ex_info)
 {
     bp::str formatted(
         bp::make_tuple(
@@ -25,9 +21,6 @@ std::string format_exception(const exception_info& ex_info)
     return bp::extract<std::string>(formatted);
 }
 
-/* Calls ``format_exception()`` with the return value of
- * ``getExceptionInfo()``.
- */
 std::string format_exception()
 {
     return format_exception(

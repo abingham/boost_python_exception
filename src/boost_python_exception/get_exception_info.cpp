@@ -1,5 +1,7 @@
 #include <boost_python_exception/get_exception_info.hpp>
 
+#include <Python.h>
+
 namespace bp=boost::python;
 
 namespace {
