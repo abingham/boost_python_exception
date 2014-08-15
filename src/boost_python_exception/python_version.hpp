@@ -3,30 +3,30 @@
 
 namespace boost_python_exception {
 
-	/**
-	 * @brief The python version number this library was compiled with
-	 */
-	struct python_version{
-		/**
-		 * @brief Major part of version number
-		 */
-		unsigned int const major;
+/**
+ * @brief The python version number this library was compiled with
+ */
+struct python_version{
+    /**
+     * @brief Major part of version number
+     */
+    unsigned int const major;
 
-		/**
-		 * @brief Minor part of version number
-		 */
-		unsigned int const minor;
+    /**
+     * @brief Minor part of version number
+     */
+    unsigned int const minor;
 
-		/**
-		 * @brief Micro part of version number
-		 */
-		unsigned int const micro;
+    /**
+     * @brief Micro part of version number
+     */
+    unsigned int const micro;
 
-		/**
-		 * @brief Get the python version this library was compiled with
-		 */
-		python_version();
-	};
+    /**
+     * @brief Get the python version this library was compiled with
+     */
+    python_version();
+};
 
 }
 

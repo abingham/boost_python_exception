@@ -11,18 +11,18 @@ namespace boost_python_exception {
  */
 struct traceback_step
 {
-	/*
-	 * @brief The line number in the file where the error occurred
-	 */
-	int line_number;
-	/*
-	 * @brief The python file in which the error occurred
-	 */
-	std::string file_name;
-	/*
-	 * @brief A description where the error occurred, e.g., a module, function, etc...
-	 */
-	std::string source;
+    /*
+     * @brief The line number in the file where the error occurred
+     */
+    int line_number;
+    /*
+     * @brief The python file in which the error occurred
+     */
+    std::string file_name;
+    /*
+     * @brief A description where the error occurred, e.g., a module, function, etc...
+     */
+    std::string source;
 };
 
 /*
@@ -36,4 +36,3 @@ std::ostream& operator<<(std::ostream& stream, traceback_step const & info);
 }
 
 #endif /* INCLUDE_BOOST_PYTHON_EXCEPTION_TRACEBACK_STEP_H */
-
