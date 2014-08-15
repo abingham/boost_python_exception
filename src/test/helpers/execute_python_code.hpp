@@ -7,6 +7,13 @@
 
 namespace test {
 
+/* Execute ``python_code`` as Python code in the context of the main
+   module.
+
+   If ``suppress_exception`` is true, then any
+   ``boost::python::error_already_set`` raised while executing the
+   code will be suppressed. Otherwise, the exception will be raised.
+ */
 void execute_python_code_in_main_module(
     std::string const & python_code,
     bool suppress_exception=false);
