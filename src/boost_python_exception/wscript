@@ -1,4 +1,5 @@
 def build(bld):
     bld.shlib(source=bld.path.ant_glob('**/*.cpp'),
               target='boost_python_exception',
-              use='BOOST')
+              use='BOOST',
+              features='pyembed')

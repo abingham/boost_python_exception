@@ -12,7 +12,12 @@ namespace boost_python_exception {
 
 std::string format_exception(exception_info const & ex_info)
 {
-    bp::str formatted(bp::make_tuple(ex_info.type, ex_info.value, ex_info.traceback));
+    bp::str formatted(
+        bp::make_tuple(
+            ex_info.type,
+            ex_info.value,
+            ex_info.traceback));
+
     return bp::extract<std::string>(formatted);
 }
 

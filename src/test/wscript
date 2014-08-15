@@ -10,5 +10,6 @@ def build(bld):
     bld.program(source=bld.path.ant_glob('**/*.cpp'),
                 target='boost_python_exception_tests',
                 defines=['BOOST_TEST_DYN_LINK'],
-                use='boost_python_exception BOOST_UNIT_TEST')
-    
+                use='boost_python_exception BOOST_UNIT_TEST',
+                features='pyembed')
+

@@ -1,17 +1,16 @@
-#include <boost_python_exception/get_exception_info.hpp>
-
 #include <boost/test/unit_test.hpp>
 
 #include <boost/python/import.hpp>
 
-#include <test/fixtures/clear_python_errors.hpp>
+#include <boost_python_exception/get_exception_info.hpp>
 
+#include "clear_python_errors.hpp"
 
 namespace bp=boost::python;
 namespace bpe=boost_python_exception;
 
-
-BOOST_FIXTURE_TEST_SUITE(get_exception_info, fixtures::clear_python_errors)
+BOOST_FIXTURE_TEST_SUITE(get_exception_info,
+                         bpe::test::clear_python_errors)
 
 BOOST_AUTO_TEST_CASE(no_extant_exception)
 {
@@ -29,10 +28,11 @@ BOOST_AUTO_TEST_CASE(import_error)
     }
     catch (const bp::error_already_set&) {
         bpe::exception_info const ex_info = bpe::get_exception_info();
+        bp::object const ex_type = ex_info.type;
         BOOST_CHECK(
             PyErr_GivenExceptionMatches(
                 PyExc_ImportError,
-                ex_info.type.ptr()));
+                ex_type.ptr()));
     }
 
 }
@@ -45,11 +45,12 @@ BOOST_AUTO_TEST_CASE(index_error)
         BOOST_REQUIRE(false);
     }
     catch (const bp::error_already_set&) {
-    	bpe::exception_info const ex_info = bpe::get_exception_info();
+        bpe::exception_info const ex_info = bpe::get_exception_info();
+        bp::object const ex_type = ex_info.type;
         BOOST_CHECK(
             PyErr_GivenExceptionMatches(
                 PyExc_IndexError,
-                ex_info.type.ptr()));
+                ex_type.ptr()));
     }
 
 }

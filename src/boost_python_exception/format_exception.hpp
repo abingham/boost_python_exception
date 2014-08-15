@@ -5,7 +5,6 @@
 
 namespace boost_python_exception {
 
-// forward declaration
 class exception_info;
 
 /* Generate a nicely formatted string for the given exception_info.

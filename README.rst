@@ -53,6 +53,32 @@ rather than pass all tests gloriously.
 Hopefully we can find a way to figure this out for you (or at least
 detect the problem) sometime.
 
+Mac OSX + Homebrew problems
+---------------------------
+
+It appears that homebrew does not install libpython into
+/usr/local/lib, and this causes problems since waf expects it to be
+there. So, if you experience wierd problems on OSX you may need to
+create a link for libpython::
+
+   % sudo ln -s /usr/local/Cellar/python/2.7.6_1/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib /usr/local/lib
+
+Or something like that.
+
+This problem manifests itself by our build products linking against a
+different libpython than libboost_python does. To see if you're
+experiencing this problem, you can use otool. First, see which
+libboost_python you're linking against::
+
+  % otool -L build_directory/src/test/boost_python_exception_tests | grep libboost_python
+  ... look for the path to libboost_python.dylib ...
+
+Then run otool over that libboost_python::
+
+  % otool -L <path to libboost_python>
+
+If they're linking to different libpython's, then you're seeing the problem.
+
 .. Build status badge
 .. |build-status|
    image:: https://secure.travis-ci.org/abingham/boost_python_exception.png

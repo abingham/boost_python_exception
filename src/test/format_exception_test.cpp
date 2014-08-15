@@ -1,12 +1,11 @@
-#include <boost_python_exception/format_exception.hpp>
-
 #include <boost/test/unit_test.hpp>
 
 #include <boost/python/list.hpp>
-#include <boost/python/long.hpp>
 
 #include <boost_python_exception/exception_info.hpp>
+#include <boost_python_exception/format_exception.hpp>
 
+#include "clear_python_errors.hpp"
 
 namespace bp=boost::python;
 namespace bpe=boost_python_exception;
@@ -15,7 +14,8 @@ BOOST_AUTO_TEST_SUITE(format_exception)
 
 BOOST_AUTO_TEST_SUITE(no_args)
 
-BOOST_AUTO_TEST_CASE(no_active_exception_is_all_nones)
+BOOST_FIXTURE_TEST_CASE(no_active_exception_is_all_nones,
+                        bpe::test::clear_python_errors)
 {
     PyErr_Clear();
     std::string formatted = bpe::format_exception();
@@ -42,16 +42,18 @@ BOOST_AUTO_TEST_CASE(all_nones)
 {
     std::string formatted = bpe::format_exception(
         bpe::exception_info(bp::object(),
-                       bp::object(),
-                       bp::object()));
-    BOOST_CHECK_EQUAL(formatted, "(None, None, None)");
+                            bp::object(),
+                            bp::object()));
+    BOOST_CHECK(formatted == "(None, None, None)");
 }
 
 BOOST_AUTO_TEST_CASE(not_all_nones)
 {
     std::string formatted = bpe::format_exception(
-    	bpe::exception_info(bp::long_(1), bp::long_(2), bp::long_(3)));
-    BOOST_CHECK_EQUAL(formatted, "(1L, 2L, 3L)");
+        bpe::exception_info(bp::object(1),
+                            bp::object(2),
+                            bp::object(3)));
+    BOOST_CHECK(formatted == "(1, 2, 3)");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
