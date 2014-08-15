@@ -26,7 +26,7 @@ def configure(conf):
     # On some systems, boost_python does not link against python
     # This line avoids missing references
     conf.env.append_value('LIB', conf.env['LIB_PYEMBED'])
-    
+
     conf.check_boost(lib='system python',
                      mt=False,
                      stlib=False)

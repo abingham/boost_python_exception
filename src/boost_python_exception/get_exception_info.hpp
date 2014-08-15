@@ -5,6 +5,8 @@
 
 #include <boost/python/tuple.hpp>
 
+#include <boost_python_exception/exception_info.hpp>
+
 namespace boost_python_exception {
 
 /** Get the current Python exception info tuple
@@ -16,7 +18,7 @@ namespace boost_python_exception {
       exception. If there is no current exception, all of the elements
       of the tuple will be ``None``.
  */
-boost::python::tuple get_exception_info();
+exception_info get_exception_info();
 
 }
 

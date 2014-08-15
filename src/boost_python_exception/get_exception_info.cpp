@@ -21,7 +21,7 @@ bp::object ptr_to_obj(PyObject* ptr)
 
 namespace boost_python_exception {
 
-bp::tuple get_exception_info()
+exception_info get_exception_info()
 {
     /* This bears some explanation. Our plan is to:
 
@@ -56,7 +56,7 @@ bp::tuple get_exception_info()
     // Give the exception back to Python in case anyone else wants it.
     PyErr_Restore(t, v, tb);
 
-    return bp::make_tuple(type, value, traceback);
+    return exception_info(type, value, traceback);
 }
 
 }
