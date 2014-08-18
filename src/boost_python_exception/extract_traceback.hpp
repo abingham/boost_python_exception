@@ -1,6 +1,8 @@
 #ifndef INCLUDE_BOOST_PYTHON_EXCEPTION_EXTRACT_TRACEBACK_H
 #define INCLUDE_BOOST_PYTHON_EXCEPTION_EXTRACT_TRACEBACK_H
 
+#include <Python.h>
+
 #include <vector>
 
 #include <boost/python/object.hpp>
@@ -27,4 +29,3 @@ traceback extract_traceback(boost::python::object py_traceback);
 }
 
 #endif /* INCLUDE_BOOST_PYTHON_EXCEPTION_EXTRACT_TRACEBACK_H */
-

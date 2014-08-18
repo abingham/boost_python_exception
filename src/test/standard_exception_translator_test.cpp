@@ -5,17 +5,12 @@
 #include <boost_python_exception/get_exception_info.hpp>
 #include <boost_python_exception/standard_exception_translator.hpp>
 
+#include "helpers/execute_python_code.hpp"
+
 namespace bp=boost::python;
 namespace bpe=boost_python_exception;
 
 namespace {
-
-void execute_python_code_in_main_module(std::string const & python_code)
-{
-    bp::object module = bp::import("__main__");
-    bp::object dict = module.attr("__dict__");
-    boost::python::exec(python_code.c_str(), dict);
-}
 
 struct initialize_exception_translator
 {
@@ -27,7 +22,7 @@ struct initialize_exception_translator
     void exception_test(std::string const & python_exception)
         {
             try {
-                execute_python_code_in_main_module(
+                test::execute_python_code_in_main_module(
                     "raise " + python_exception + "()");
                 BOOST_CHECK(false);
             }
