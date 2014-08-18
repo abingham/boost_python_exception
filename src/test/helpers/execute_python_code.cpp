@@ -18,7 +18,7 @@ void execute_python_code_in_main_module(
         bp::exec(python_code.c_str(), dict);
     }
     catch (bp::error_already_set const &) {
-        if (!suppress_exception)
+        if (not suppress_exception)
             throw;
     }
 }
