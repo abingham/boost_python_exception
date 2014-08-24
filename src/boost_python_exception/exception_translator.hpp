@@ -12,6 +12,7 @@
 #include <boost/python/object.hpp>
 #include <boost/python/tuple.hpp>
 
+#include <boost_python_exception/exceptions.hpp>
 #include <boost_python_exception/exception_info.hpp>
 
 namespace boost_python_exception {
@@ -89,19 +90,15 @@ void throw_(exception_info const &)
     throw ExceptionType();
 }
 
-/* A boost::exception error_info for carrying Python exception
-   information.
-*/
-typedef boost::error_info<struct tag_exc_info, exception_info> exc_info;
 
-/* An ``exception_translator::thrower`` implementation that throws a
-   default-constructed instance of ``ExceptionType`` with an ``exc_info``
-   attached containing the ``exception_info``.
+/* An ``exception_translator::thrower`` implementation that throws an
+   instance of ``ExceptionType`` instantiated with an
+   ``exception_info`` argument.
  */
 template <typename ExceptionType>
 void throw_with_python_info(exception_info const & e)
 {
-    throw ExceptionType() << exc_info(e);
+    throw ExceptionType(e);
 }
 
 }
