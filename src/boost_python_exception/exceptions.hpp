@@ -30,6 +30,7 @@ typedef exception_template<class type_error_tag> type_error;
 typedef exception_template<class reference_error_tag> reference_error;
 typedef exception_template<class value_error_tag> value_error;
 typedef exception_template<class stop_iteration_tag> stop_iteration;
+typedef exception_template<class syntax_error_tag> syntax_error;
 
 }
 

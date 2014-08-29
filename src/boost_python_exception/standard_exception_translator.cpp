@@ -26,6 +26,7 @@ exception_translator create_standard_exception_translator()
         ("ReferenceError", throw_with_python_info<reference_error>)
         ("ValueError", throw_with_python_info<value_error>)
         ("StopIteration", throw_with_python_info<stop_iteration>)
+        ("SyntaxError", throw_with_python_info<syntax_error>)
         ;
 
     BOOST_FOREACH(translation_map::value_type const & mapping, translations)

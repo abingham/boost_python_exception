@@ -86,4 +86,9 @@ BOOST_AUTO_TEST_CASE( stop_iteration )
     exception_test<bpe::stop_iteration>("StopIteration");
 }
 
+BOOST_AUTO_TEST_CASE( syntax_error )
+{
+    exception_test<bpe::syntax_error>("SyntaxError");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
