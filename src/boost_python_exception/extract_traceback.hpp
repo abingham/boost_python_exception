@@ -7,15 +7,9 @@
 
 #include <boost/python/object.hpp>
 
-#include <boost_python_exception/traceback_step.hpp>
+#include <boost_python_exception/traceback.hpp>
 
 namespace boost_python_exception {
-
-
-/**
- * @brief Represents a python traceback
- */
-typedef std::vector<traceback_step> traceback;
 
 /*
  * @brief Extract a C++ representation of a python traceback stored in the given boost::python::object

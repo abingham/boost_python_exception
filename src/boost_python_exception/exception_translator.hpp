@@ -81,7 +81,7 @@ private:
 };
 
 /* An ``exception_translator::thrower`` implementation that simply
-   throws a default-constructed instace of ``ExcType``.
+   throws a default-constructed instance of ``ExcType``.
  */
 template <typename ExceptionType>
 void throw_(exception_info const &)
