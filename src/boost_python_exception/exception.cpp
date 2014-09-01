@@ -1,20 +1,32 @@
-#include <boost_python_exception/exceptions.hpp>
+#include <boost_python_exception/exception.hpp>
 
-#include <boost_python_exception/format_exception.hpp>
+#include <sstream>
 
 namespace boost_python_exception {
 
-exception::exception(exception_info const& exc_info) :
-    exc_info_(exc_info),
-    what_(format_exception(exc_info))
+namespace {
+
+	std::string generate_message(std::string const & type, std::string const & message, traceback const & traceback)
+	{
+		std::ostringstream result;
+		if (not traceback.empty()) {
+			result << "Python traceback (most recent calls last):\n";
+			result << traceback;
+		}
+		result << type;
+		if (not message.empty()) {
+			result << ": " << message;
+		}
+		return result.str();
+	}
+
+}
+
+exception::exception(std::string const & type, std::string const & message, traceback const & traceback) :
+    what_(generate_message(type, message, traceback))
 {}
 
 exception::~exception() throw() {}
-
-exception_info const& exception::python_exception() const
-{
-    return exc_info_;
-}
 
 const char* exception::what() const throw()
 {

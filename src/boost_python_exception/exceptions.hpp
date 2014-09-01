@@ -6,7 +6,18 @@
 
 #include <boost_python_exception/exception.hpp>
 
+
 namespace boost_python_exception {
+
+class exception_info;
+
+namespace impl {
+	/**
+	 * @brief Generic exception factory which extracts error type, message, and
+	 *        traceback from exception_info struct.
+	 */
+	exception make_exception(exception_info const & exc_info);
+}
 
 /* A template for simple subclasses of exception.
  */
@@ -14,8 +25,8 @@ template <typename ExcType>
 class exception_template : public exception
 {
 public:
-    exception_template(exception_info const& exc_info) :
-        exception(exc_info)
+    exception_template(exception_info const & exc_info) :
+        exception(impl::make_exception(exc_info))
     {}
 };
 

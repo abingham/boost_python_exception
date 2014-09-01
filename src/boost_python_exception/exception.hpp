@@ -8,7 +8,7 @@
 
 #include <boost/exception/exception.hpp>
 
-#include <boost_python_exception/exception_info.hpp>
+#include <boost_python_exception/traceback.hpp>
 
 namespace boost_python_exception {
 
@@ -17,16 +17,13 @@ class exception : public virtual boost::exception,
                   public virtual std::exception
 {
 public:
-    explicit exception(exception_info const& exc_info);
+    exception(std::string const & type, std::string const & message, traceback const & traceback);
     ~exception() throw();
-
-    exception_info const& python_exception() const;
 
     const char* what() const throw();
 
 private:
     exception();
-    exception_info exc_info_;
     std::string what_;
 };
 

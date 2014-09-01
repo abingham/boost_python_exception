@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE( add )
 {
     bpe::exception_translator e;
     BOOST_CHECK(
-        !e.add(bpe::builtins().attr("IndexError"),
+        not e.add(bpe::builtins().attr("IndexError"),
                bpe::throw_with_python_info<bpe::index_error>));
 
     try {
@@ -97,14 +97,14 @@ BOOST_AUTO_TEST_CASE( remove_multiple_times )
         e.remove(bpe::builtins().attr("IndexError")));
 
     BOOST_CHECK(
-        !e.remove(bpe::builtins().attr("IndexError")));
+        not e.remove(bpe::builtins().attr("IndexError")));
 }
 
 BOOST_AUTO_TEST_CASE( remove_unknown )
 {
     bpe::exception_translator e;
     BOOST_CHECK(
-        !e.remove(bpe::builtins().attr("divmod")));
+        not e.remove(bpe::builtins().attr("divmod")));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
