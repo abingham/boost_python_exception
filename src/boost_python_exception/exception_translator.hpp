@@ -9,8 +9,6 @@
 #include <boost/exception/info.hpp>
 #include <boost/function.hpp>
 #include <boost/python/object.hpp>
-#include <boost/python/str.hpp>
-#include <boost/python/extract.hpp>
 
 #include <boost_python_exception/exceptions.hpp>
 #include <boost_python_exception/exception_info.hpp>
@@ -90,8 +88,7 @@ template <typename ExceptionType>
 void throw_with_python_info(exception_info const & exc_info)
 {
 	std::string const type = extract_exception_type(exc_info.type);
-
-	std::string const message = boost::python::extract<std::string>(boost::python::str(exc_info.value));
+	std::string const message = extract_message(exc_info.value);
 	traceback const traceback = extract_traceback(exc_info.traceback);
 
     throw ExceptionType(type, message, traceback);

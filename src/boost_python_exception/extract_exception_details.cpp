@@ -2,6 +2,9 @@
 
 #include <frameobject.h>
 
+#include <boost/python/extract.hpp>
+#include <boost/python/str.hpp>
+
 namespace boost_python_exception {
 
 namespace {
@@ -41,5 +44,11 @@ std::string extract_exception_type(boost::python::object type)
 		throw std::logic_error("Given type is not a standard python exception class");
 	}
 }
+
+std::string extract_message(boost::python::object value)
+{
+	return boost::python::extract<std::string>(boost::python::str(value));
+}
+
 
 }

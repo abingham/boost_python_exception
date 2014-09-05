@@ -82,23 +82,44 @@ BOOST_AUTO_TEST_CASE(exception_returns_type_name)
     test::execute_python_code_in_main_module(python_code, true);
 
     std::string const expected = "exceptions.ValueError";
-    std::string const actual = bpe::extract_exception_type(bpe::get_exception_info().type);
-
-    BOOST_CHECK_EQUAL(expected, actual);
+    BOOST_CHECK_EQUAL(expected, bpe::extract_exception_type(bpe::get_exception_info().type));
 }
 
 BOOST_AUTO_TEST_CASE(integer_as_type_throws)
 {
-	boost::python::object not_an_exception_type(42);
-
+	boost::python::object const not_an_exception_type(42);
 	BOOST_CHECK_THROW(bpe::extract_exception_type(not_an_exception_type), std::logic_error);
 }
 
 BOOST_AUTO_TEST_CASE(none_as_type_throws)
 {
-	boost::python::object none;
-
+	boost::python::object const none;
 	BOOST_CHECK_THROW(bpe::extract_exception_type(none), std::logic_error);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+
+
+
+
+BOOST_FIXTURE_TEST_SUITE(extract_message, test::fixtures::clear_python_errors)
+
+BOOST_AUTO_TEST_CASE(exception_returns_message)
+{
+    std::string const expected = "message";
+    std::string const python_code("raise ValueError('" + expected + "')");
+    test::execute_python_code_in_main_module(python_code, true);
+
+    BOOST_CHECK_EQUAL(expected, bpe::extract_message(bpe::get_exception_info().value));
+}
+
+BOOST_AUTO_TEST_CASE(none_returns_string_representation)
+{
+	boost::python::object const none;
+
+	std::string const expected = "None";
+	BOOST_CHECK_EQUAL(expected, bpe::extract_message(none));
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
