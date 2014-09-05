@@ -1,15 +1,3 @@
-/**
- *  @file exceptions.cpp
- *  @date 01.09.2014
- *  @author mkoenig
- *  @brief 
- *
- *  $LastChangedDate$
- *  $LastChangedBy$
- *  $LastChangedRevision$
- *
- */
-
 #include <boost_python_exception/exceptions.hpp>
 
 #include <boost/python/extract.hpp>

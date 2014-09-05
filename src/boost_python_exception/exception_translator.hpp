@@ -8,12 +8,14 @@
 
 #include <boost/exception/info.hpp>
 #include <boost/function.hpp>
-#include <boost/python/import.hpp>
 #include <boost/python/object.hpp>
-#include <boost/python/tuple.hpp>
+#include <boost/python/str.hpp>
+#include <boost/python/extract.hpp>
 
 #include <boost_python_exception/exceptions.hpp>
 #include <boost_python_exception/exception_info.hpp>
+#include <boost_python_exception/extract_traceback.hpp>
+#include <boost_python_exception/extract_exception_type.hpp>
 
 namespace boost_python_exception {
 
@@ -81,24 +83,19 @@ private:
     exception_translators exception_translators_;
 };
 
-/* An ``exception_translator::thrower`` implementation that simply
-   throws a default-constructed instance of ``ExcType``.
- */
-template <typename ExceptionType>
-void throw_(exception_info const &)
-{
-    throw ExceptionType();
-}
-
-
 /* An ``exception_translator::thrower`` implementation that throws an
    instance of ``ExceptionType`` instantiated with an
    ``exception_info`` argument.
  */
 template <typename ExceptionType>
-void throw_with_python_info(exception_info const & e)
+void throw_with_python_info(exception_info const & exc_info)
 {
-    throw ExceptionType(e);
+	std::string const type = extract_exception_type(exc_info.type);
+
+	std::string const message = boost::python::extract<std::string>(boost::python::str(exc_info.value));
+	traceback const traceback = extract_traceback(exc_info.traceback);
+
+    throw ExceptionType(type, message, traceback);
 }
 
 }

@@ -17,6 +17,13 @@ class exception : public virtual boost::exception,
                   public virtual std::exception
 {
 public:
+	/**
+	 * @brief Create a new exception. The return value of what() depends on the
+	 *        passed parameters
+	 * @param type The type of the python exception
+	 * @param message The message of the python exception
+	 * @param traceback The python traceback
+	 */
     exception(std::string const & type, std::string const & message, traceback const & traceback);
     ~exception() throw();
 

@@ -25,8 +25,8 @@ template <typename ExcType>
 class exception_template : public exception
 {
 public:
-    exception_template(exception_info const & exc_info) :
-        exception(impl::make_exception(exc_info))
+    exception_template(std::string const & type, std::string const & message, traceback const & traceback) :
+        exception(type, message, traceback)
     {}
 };
 

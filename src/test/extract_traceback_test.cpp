@@ -4,9 +4,6 @@
 
 #include <sstream>
 
-#include <boost/python/import.hpp>
-#include <boost/python/exec.hpp>
-
 #include <boost_python_exception/get_exception_info.hpp>
 
 #include "helpers/execute_python_code.hpp"
