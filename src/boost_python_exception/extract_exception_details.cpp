@@ -1,4 +1,4 @@
-#include <boost_python_exception/extract_traceback.hpp>
+#include <boost_python_exception/extract_exception_details.hpp>
 
 #include <frameobject.h>
 
@@ -31,6 +31,15 @@ traceback extract_traceback(boost::python::object py_traceback)
 
         return result;
     }
+}
+
+std::string extract_exception_type(boost::python::object type)
+{
+	if (PyExceptionClass_Check(type.ptr())) {
+		return PyExceptionClass_Name(type.ptr());
+	} else {
+		throw std::logic_error("Given type is not a standard python exception class");
+	}
 }
 
 }

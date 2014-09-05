@@ -1,9 +1,7 @@
-#ifndef INCLUDE_BOOST_PYTHON_EXCEPTION_EXTRACT_TRACEBACK_H
-#define INCLUDE_BOOST_PYTHON_EXCEPTION_EXTRACT_TRACEBACK_H
+#ifndef INCLUDE_BOOST_PYTHON_EXCEPTION_EXTRACT_EXCEPTION_DETAILS_H
+#define INCLUDE_BOOST_PYTHON_EXCEPTION_EXTRACT_EXCEPTION_DETAILS_H
 
 #include <Python.h>
-
-#include <vector>
 
 #include <boost/python/object.hpp>
 
@@ -20,6 +18,14 @@ namespace boost_python_exception {
  */
 traceback extract_traceback(boost::python::object py_traceback);
 
+/**
+ * @brief Extracts the type name of a python standard exception
+ * @param type A python object which should represent a standard exception type
+ * @return The type as a C++ string
+ * @throw std::logic_error in case type is not a standard exception type
+ */
+std::string extract_exception_type(boost::python::object type);
+
 }
 
-#endif /* INCLUDE_BOOST_PYTHON_EXCEPTION_EXTRACT_TRACEBACK_H */
+#endif /* INCLUDE_BOOST_PYTHON_EXCEPTION_EXTRACT_EXCEPTION_DETAILS_H */
