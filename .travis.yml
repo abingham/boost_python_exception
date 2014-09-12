@@ -9,6 +9,7 @@ before_install:
 script:
     - python waf update --files=boost
     - python waf configure
+    - cat /home/travis/build/abingham/boost_python_exception/build_directory/config.log
     - python waf build -v
     - LD_LIBRARY_PATH=build_directory/src/boost_python_exception/ ./build_directory/src/test/boost_python_exception_tests
 
