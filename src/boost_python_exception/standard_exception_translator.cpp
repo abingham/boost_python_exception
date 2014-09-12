@@ -9,10 +9,6 @@
 #include <boost_python_exception/exceptions.hpp>
 #include <boost_python_exception/util.hpp>
 
-#include <iostream>
-#include <boost/python/str.hpp>
-#include <boost/python/long.hpp>
-
 namespace bp = boost::python;
 
 namespace boost_python_exception {
