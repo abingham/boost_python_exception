@@ -9,8 +9,6 @@
 
 namespace boost_python_exception {
 
-class exception_info;
-
 /* A template for simple subclasses of exception.
  */
 template <typename ExcType>

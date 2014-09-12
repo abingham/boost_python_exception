@@ -81,7 +81,7 @@ private:
 };
 
 /* An ``exception_translator::thrower`` implementation that throws an
-   instance of ``ExceptionType`` instantiated with an
+   instance of ``ExceptionType`` instantiated with the contents of an
    ``exception_info`` argument.
  */
 template <typename ExceptionType>

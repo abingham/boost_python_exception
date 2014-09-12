@@ -23,10 +23,9 @@ struct initialize_exception_translator
         {
             try {
                 test::execute_python_code_in_main_module(
-                    "raise " + python_exception + "()");
+                    "raise " + python_exception + "('Error message')");
                 BOOST_CHECK(false);
-            }
-            catch (bp::error_already_set const &) {
+            } catch (bp::error_already_set const &) {
                 BOOST_CHECK_THROW(
                     translator.translate(bpe::get_exception_info()),
                     CPPExceptionType);
@@ -88,7 +87,28 @@ BOOST_AUTO_TEST_CASE( stop_iteration )
 
 BOOST_AUTO_TEST_CASE( syntax_error )
 {
-    exception_test<bpe::syntax_error>("SyntaxError");
+	bpe::exception_translator translator(bpe::create_standard_exception_translator());
+
+    try {
+        test::execute_python_code_in_main_module(
+            "def function():\n"
+        	"    obvious syntax error"
+        );
+        BOOST_CHECK(false);
+    } catch (bp::error_already_set const &) {
+        try {
+            translator.translate(bpe::get_exception_info());
+            BOOST_CHECK(false);
+        } catch (bpe::syntax_error const & error) {
+        	std::string const expected_message(
+        		"exceptions.SyntaxError: In module \"<string>\", line 2, position 18:\n"
+				"Offending code:     obvious syntax error\n"
+				"                                 ^"
+        	);
+            BOOST_CHECK_EQUAL(expected_message.c_str(), error.what());
+        }
+    }
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()
