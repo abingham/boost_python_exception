@@ -12,8 +12,7 @@ void exception_translator::translate(exception_info const & excInfo) const
 
     BOOST_FOREACH(mapping const & mapping, exception_translators_)
     {
-        if (PyErr_GivenExceptionMatches(mapping.first.ptr(),
-                                        excInfo.type.ptr()))
+        if ( PyErr_GivenExceptionMatches(excInfo.type.ptr(), mapping.first.ptr()) )
         {
             mapping.second(excInfo);
             return;
@@ -23,6 +22,8 @@ void exception_translator::translate(exception_info const & excInfo) const
     if (PyErr_GivenExceptionMatches(excInfo.type.ptr(), PyExc_Exception)) {
     	throw_with_python_info<exception>(excInfo);
     }
+
+    throw exception("<unknown non-standard exception>", "", extract_traceback(excInfo.traceback));
 }
 
 bool exception_translator::add(boost::python::object excType,

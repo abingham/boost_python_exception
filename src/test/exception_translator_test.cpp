@@ -8,6 +8,7 @@
 #include <boost_python_exception/util.hpp>
 
 #include <test/helpers/fixtures/clear_python_errors.hpp>
+#include <test/helpers/execute_python_code.hpp>
 
 namespace bpe=boost_python_exception;;
 namespace bp=boost::python;
@@ -121,8 +122,32 @@ BOOST_AUTO_TEST_CASE( empty_translator_translates_standard_exception )
     } catch (bp::error_already_set const &) {
         try {
         	translator.translate(bpe::get_exception_info());
+        	BOOST_FAIL("No exception thrown");
         } catch (bpe::exception const & error) {
             std::string const expected_message("exceptions.IndexError: list index out of range");
+            BOOST_CHECK_EQUAL(expected_message, error.what());
+        }
+    }
+}
+
+BOOST_AUTO_TEST_CASE( empty_translator_translates_non_standard_exception )
+{
+    bpe::exception_translator translator;
+
+    try {
+    	test::execute_python_code_in_main_module(
+    			"class old_style_class:\n"
+    			"    pass\n"
+    			"raise old_style_class()");
+    } catch (bp::error_already_set const &) {
+        try {
+        	translator.translate(bpe::get_exception_info());
+        	BOOST_FAIL("No exception thrown");
+        } catch (bpe::exception const & error) {
+            std::string const expected_message(
+            		"Python traceback (most recent calls last):\n"
+            		"File \"<string>\", line 3, in <module>\n"
+            		"<unknown non-standard exception>");
             BOOST_CHECK_EQUAL(expected_message, error.what());
         }
     }
