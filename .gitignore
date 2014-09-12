@@ -3,6 +3,7 @@
 *~
 *.os
 *.dylib
+*.pyc
 .waf*
 .lock-waf*
 build_directory/*
