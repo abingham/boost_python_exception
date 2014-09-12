@@ -16,9 +16,12 @@ void exception_translator::translate(exception_info const & excInfo) const
                                         excInfo.type.ptr()))
         {
             mapping.second(excInfo);
-
             return;
         }
+    }
+
+    if (PyErr_GivenExceptionMatches(excInfo.type.ptr(), PyExc_Exception)) {
+    	throw_with_python_info<exception>(excInfo);
     }
 }
 

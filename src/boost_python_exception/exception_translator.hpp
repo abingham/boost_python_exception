@@ -51,6 +51,17 @@ class exception_translator
 {
 public:
 
+	/* Translate the given exception_info to a C++ exception
+
+	   This will check the type of the given exception and compare it
+	   with all types registered earlier using the add() method. If a
+	   matching translator is found, translate() throws whatever exception
+	   the found translator does (if it indeed does throw).
+
+	   If no matching translator is found, a default mechanism will
+	   throw a boost_python_exception::exception with as much detail
+	   as can be obtained without any information on the exception.
+	 */
     void translate(exception_info const & excInfo) const;
 
     typedef boost::function<void(exception_info const &)> thrower;

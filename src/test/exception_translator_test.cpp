@@ -7,6 +7,8 @@
 #include <boost_python_exception/get_exception_info.hpp>
 #include <boost_python_exception/util.hpp>
 
+#include <test/helpers/fixtures/clear_python_errors.hpp>
+
 namespace bpe=boost_python_exception;;
 namespace bp=boost::python;
 
@@ -21,7 +23,7 @@ void generate_index_error()
 
 }
 
-BOOST_AUTO_TEST_SUITE( exception_translator )
+BOOST_FIXTURE_TEST_SUITE( exception_translator, test::fixtures::clear_python_errors )
 
 BOOST_AUTO_TEST_CASE( add )
 {
@@ -84,6 +86,9 @@ BOOST_AUTO_TEST_CASE( remove )
         catch (bpe::index_error const&) {
             BOOST_CHECK(false);
         }
+        catch (bpe::exception const &) {
+        	// okay because default throws standard exception
+        }
     }
 }
 
@@ -105,6 +110,22 @@ BOOST_AUTO_TEST_CASE( remove_unknown )
     bpe::exception_translator e;
     BOOST_CHECK(
         not e.remove(bpe::builtins().attr("divmod")));
+}
+
+BOOST_AUTO_TEST_CASE( empty_translator_translates_standard_exception )
+{
+    bpe::exception_translator translator;
+
+    try {
+        generate_index_error();
+    } catch (bp::error_already_set const &) {
+        try {
+        	translator.translate(bpe::get_exception_info());
+        } catch (bpe::exception const & error) {
+            std::string const expected_message("exceptions.IndexError: list index out of range");
+            BOOST_CHECK_EQUAL(expected_message, error.what());
+        }
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()

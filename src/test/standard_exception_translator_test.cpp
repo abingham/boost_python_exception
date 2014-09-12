@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE( syntax_error )
 			"Offending code:     obvious syntax error\n"
 			"                                 ^"
 		);
-		BOOST_CHECK_EQUAL(expected_message.c_str(), error.what());
+		BOOST_CHECK_EQUAL(expected_message, error.what());
 	}
 
 }
