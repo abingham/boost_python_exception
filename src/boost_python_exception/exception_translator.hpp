@@ -8,11 +8,11 @@
 
 #include <boost/exception/info.hpp>
 #include <boost/function.hpp>
-#include <boost/python/import.hpp>
 #include <boost/python/object.hpp>
-#include <boost/python/tuple.hpp>
 
+#include <boost_python_exception/exceptions.hpp>
 #include <boost_python_exception/exception_info.hpp>
+#include <boost_python_exception/extract_exception_details.hpp>
 
 namespace boost_python_exception {
 
@@ -51,6 +51,17 @@ class exception_translator
 {
 public:
 
+	/* Translate the given exception_info to a C++ exception
+
+	   This will check the type of the given exception and compare it
+	   with all types registered earlier using the add() method. If a
+	   matching translator is found, translate() throws whatever exception
+	   the found translator does (if it indeed does throw).
+
+	   If no matching translator is found, a default mechanism will
+	   throw a boost_python_exception::exception with as much detail
+	   as can be obtained without any information on the exception.
+	 */
     void translate(exception_info const & excInfo) const;
 
     typedef boost::function<void(exception_info const &)> thrower;
@@ -80,28 +91,18 @@ private:
     exception_translators exception_translators_;
 };
 
-/* An ``exception_translator::thrower`` implementation that simply
-   throws a default-constructed instace of ``ExcType``.
+/* An ``exception_translator::thrower`` implementation that throws an
+   instance of ``ExceptionType`` instantiated with the contents of an
+   ``exception_info`` argument.
  */
 template <typename ExceptionType>
-void throw_(exception_info const &)
+void throw_with_python_info(exception_info const & exc_info)
 {
-    throw ExceptionType();
-}
+	std::string const type = extract_exception_type(exc_info.type);
+	std::string const message = extract_message(exc_info.value);
+	traceback const traceback = extract_traceback(exc_info.traceback);
 
-/* A boost::exception error_info for carrying Python exception
-   information.
-*/
-typedef boost::error_info<struct tag_exc_info, exception_info> exc_info;
-
-/* An ``exception_translator::thrower`` implementation that throws a
-   default-constructed instance of ``ExceptionType`` with an ``exc_info``
-   attached containing the ``exception_info``.
- */
-template <typename ExceptionType>
-void throw_with_python_info(exception_info const & e)
-{
-    throw ExceptionType() << exc_info(e);
+    throw ExceptionType(type, message, traceback);
 }
 
 }

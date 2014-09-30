@@ -4,29 +4,34 @@
 /** C++ counterparts to the standard Python exceptions.
  */
 
-#include <exception>
+#include <boost_python_exception/exception.hpp>
 
-#include <boost/exception/exception.hpp>
 
 namespace boost_python_exception {
 
-/** The base for all boost_python_exception exceptions. */
-class exception : public virtual boost::exception,
-                  public virtual std::exception
-{};
+/* A template for simple subclasses of exception.
+ */
+template <typename ExcType>
+class exception_template : public exception
+{
+public:
+    exception_template(std::string const & type, std::string const & message, traceback const & traceback) :
+        exception(type, message, traceback)
+    {}
+};
 
 /* A collection of C++ analogues for the standard Python exceptions.
  */
-
-class attribute_error : public exception {};
-class import_error : public exception {};
-class index_error : public exception {};
-class io_error : public exception {};
-class key_error : public exception {};
-class type_error : public exception {};
-class reference_error : public exception {};
-class value_error : public exception {};
-class stop_iteration : public exception {};
+typedef exception_template<class attribute_error_tag> attribute_error;
+typedef exception_template<class import_error_tag> import_error;
+typedef exception_template<class index_error_tag> index_error;
+typedef exception_template<class io_error_tag> io_error;
+typedef exception_template<class key_error_tag> key_error;
+typedef exception_template<class type_error_tag> type_error;
+typedef exception_template<class reference_error_tag> reference_error;
+typedef exception_template<class value_error_tag> value_error;
+typedef exception_template<class stop_iteration_tag> stop_iteration;
+typedef exception_template<class syntax_error_tag> syntax_error;
 
 }
 

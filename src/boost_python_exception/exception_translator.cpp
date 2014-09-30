@@ -6,20 +6,33 @@ using namespace boost::python;
 
 namespace boost_python_exception {
 
-void exception_translator::translate(exception_info const & excInfo) const
+namespace {
+
+	void handle_default_exception(exception_info const & info)
+	{
+	    if (PyErr_GivenExceptionMatches(info.type.ptr(), PyExc_Exception)) {
+	    	throw_with_python_info<exception>(info);
+	    }
+
+	    throw exception("<unknown non-standard exception>", "", extract_traceback(info.traceback));
+	}
+
+}
+
+void exception_translator::translate(exception_info const & info) const
 {
-    if (excInfo.type.is_none()) return;
+    if (info.type.is_none()) return;
 
     BOOST_FOREACH(mapping const & mapping, exception_translators_)
     {
-        if (PyErr_GivenExceptionMatches(mapping.first.ptr(),
-                                        excInfo.type.ptr()))
+        if ( PyErr_GivenExceptionMatches(info.type.ptr(), mapping.first.ptr()) )
         {
-            mapping.second(excInfo);
-
+            mapping.second(info);
             return;
         }
     }
+
+    handle_default_exception(info);
 }
 
 bool exception_translator::add(boost::python::object excType,
