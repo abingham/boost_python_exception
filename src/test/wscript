@@ -1,7 +1,7 @@
 def configure(conf):
     conf.load('boost')
     
-    conf.check_boost(lib='unit_test',
+    conf.check_boost(lib='unit_test_framework',
                      mt=False,
                      stlib=False,
                      uselib_store='BOOST_UNIT_TEST')
