@@ -1,41 +1,33 @@
-# This file is NOT licensed under the GPLv3, which is the license for the rest
-# of YouCompleteMe.
-#
-# Here's the license text for this file:
-#
-# This is free and unencumbered software released into the public domain.
-#
-# Anyone is free to copy, modify, publish, use, compile, sell, or
-# distribute this software, either in source code form or as a compiled
-# binary, for any purpose, commercial or non-commercial, and by any
-# means.
-#
-# In jurisdictions that recognize copyright laws, the author or authors
-# of this software dedicate any and all copyright interest in the
-# software to the public domain. We make this dedication for the benefit
-# of the public at large and to the detriment of our heirs and
-# successors. We intend this dedication to be an overt act of
-# relinquishment in perpetuity of all present and future rights to this
-# software under copyright law.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-# IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-# OTHER DEALINGS IN THE SOFTWARE.
-#
-# For more information, please refer to <http://unlicense.org/>
+"""An example ycmd 'extra conf' file for mac osx.
+
+THIS IS JUST AN EXAMPLE FILE! To use this you'll generally need to
+copy it to .ycm_extra_conf.py and edit it for your specific system.
+
+ycmd is a completion framework for various editors/IDEs. For more
+information, see https://github.com/Valloric/ycmd.
+"""
 
 import os
 import sys
 import ycm_core
 
+# These are includes that we have to specify explicitly because of
+# some defect in clang. These get added to flags specified in clang
+# compilation databases.
+include_flags = [
+    "-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1",
+    "-I/usr/local/include",
+    "-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.0/include",
+    "-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+    "-I/usr/include",
+    "-I/System/Library/Frameworks",
+    "-I/Library/Frameworks",
+]
+
 # These are the compilation flags that will be used in case there's no
 # compilation database set (by default, one is not set).
 # CHANGE THIS LIST OF FLAGS. YES, THIS IS THE DROID YOU HAVE BEEN LOOKING FOR.
-flags = []
+flags = include_flags[:]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
 # compile_commands.json file to use that instead of 'flags'. See here for
@@ -111,7 +103,6 @@ def GetCompilationInfoForFile(filename):
             if os.path.exists(replacement_file):
                 compilation_info = database.GetCompilationInfoForFile(
                     replacement_file)
-                print('COMPILATION INFO:', compilation_info)
                 if compilation_info.compiler_flags_:
                     return compilation_info
         return None
@@ -129,6 +120,8 @@ def FlagsForFile(filename, **kwargs):
         final_flags = MakeRelativePathsInFlagsAbsolute(
             compilation_info.compiler_flags_,
             compilation_info.compiler_working_dir_)
+
+        final_flags.extend(include_flags)
 
         # NOTE: This is just for YouCompleteMe; it's highly likely
         # that your project does NOT need to remove the stdlib

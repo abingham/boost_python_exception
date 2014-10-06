@@ -1,6 +1,7 @@
 import os
-import subprocess
 import sys
+
+import waflib.Errors
 
 top = '.'
 out = 'build_directory'
@@ -19,8 +20,21 @@ def options(opt):
               'safely ignore it.')
 
 
+def load_if_exists(conf, tool):
+    """Try to load a tool, but ignore errors if it doesn't exist.
+
+    This is for e.g. loading optional tools, the absence of which
+    won't impact the correctness of the build.
+    """
+    try:
+        conf.load(tool)
+    except waflib.Errors.ConfigurationError:
+        print('Extra tool "{}" not found. Ignoring.'.format(tool))
+
+
 def configure(conf):
     conf.load('compiler_cxx boost python')
+    load_if_exists(conf, 'clang_compilation_database')
     conf.check_python_headers()
 
     # On some systems, boost_python does not link against python

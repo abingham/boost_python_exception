@@ -26,6 +26,21 @@ After that, the standard waf commands are all you need::
 
 The build output will be in ``build_directory``.
 
+Creating a clang compilation database (optional)
+------------------------------------------------
+
+If you want to create a clang compilation database as part of the
+build, you need to also update the `clang_compilation_database` tool::
+
+    % python waf update --files=clang_compilation_database
+
+Do this before running ``python waf configure``. After you've
+installed this tool, the build will generate a database in
+``build_directory/compile_commands.json``.
+
+Note that this tool is completely optional. If you don't install it,
+the build will work perfectly normally.
+
 Running tests
 =============
 
