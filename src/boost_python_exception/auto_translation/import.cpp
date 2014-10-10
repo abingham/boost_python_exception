@@ -16,7 +16,7 @@ boost::python::object import(std::string const & module_name)
 		return bp::import(module_name.c_str());
 	} catch (bp::error_already_set const &) {
 		exception_info const error = get_exception_info();
-//		clear_exception();
+		clear_exception();
 		exception_translator::translate(error);
 	}
 }

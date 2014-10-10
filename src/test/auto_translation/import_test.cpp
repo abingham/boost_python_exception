@@ -1,5 +1,7 @@
 #include <boost_python_exception/auto_translation/import.hpp>
 
+#include <Python.h>
+
 #include <boost/python/import.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -30,6 +32,7 @@ BOOST_AUTO_TEST_CASE( throws_cpp_exception_on_error )
 
 	auto_translation::exception_translator::set_default();
 	BOOST_CHECK_THROW(auto_translation::import(invalid_module), bpe::import_error);
+	BOOST_CHECK(not PyErr_Occurred());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
