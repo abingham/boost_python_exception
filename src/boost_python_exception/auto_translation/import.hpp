@@ -1,6 +1,8 @@
 #ifndef INCLUDE_BOOST_PYTHON_EXCEPTION__AUTO_TRANSLATION__IMPORT_HPP
 #define INCLUDE_BOOST_PYTHON_EXCEPTION__AUTO_TRANSLATION__IMPORT_HPP
 
+#include <Python.h>
+
 #include <string>
 
 #include <boost/python/object.hpp>
