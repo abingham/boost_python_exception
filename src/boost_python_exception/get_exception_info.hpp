@@ -3,10 +3,6 @@
 
 #include <boost_python_exception/exception_info.hpp>
 
-#include <boost_python_exception/exception_info.hpp>
-
-#include <boost_python_exception/exception_info.hpp>
-
 namespace boost_python_exception {
 
 /** Get the current Python exception info

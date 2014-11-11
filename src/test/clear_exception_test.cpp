@@ -15,11 +15,11 @@ BOOST_FIXTURE_TEST_SUITE( clear_exception,
 
 BOOST_AUTO_TEST_CASE( no_extant_exception )
 {
-    BOOST_CHECK(!PyErr_Occurred());
+    BOOST_CHECK(not PyErr_Occurred());
 
     bpe::clear_exception();
 
-    BOOST_CHECK(!PyErr_Occurred());
+    BOOST_CHECK(not PyErr_Occurred());
 }
 
 BOOST_AUTO_TEST_CASE( extant_exception )
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE( extant_exception )
     catch (const bp::error_already_set&) {
         BOOST_CHECK(PyErr_Occurred());
         bpe::clear_exception();
-        BOOST_CHECK(!PyErr_Occurred());
+        BOOST_CHECK(not PyErr_Occurred());
     }
 
 }
