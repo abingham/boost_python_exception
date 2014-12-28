@@ -7,6 +7,7 @@
 #include <boost/foreach.hpp>
 
 #include <boost_python_exception/exceptions.hpp>
+#include <boost_python_exception/python_compat.hpp>
 #include <boost_python_exception/util.hpp>
 
 namespace bp = boost::python;
@@ -15,30 +16,30 @@ namespace boost_python_exception {
 
 namespace {
 
-	std::string make_syntax_error_message(bp::object error)
-	{
-		std::string const module_name = bp::extract<std::string>(error.attr("filename"));
-		std::string const code = bp::extract<std::string>(error.attr("text"));
+ std::string make_syntax_error_message(bp::object error)
+ {
+  std::string const module_name = bp::extract<std::string>(error.attr("filename"));
+  std::string const code = bp::extract<std::string>(error.attr("text"));
 
-		// for some reason, extract<long> does not work while a python error is set, so do it with CPython
-		long const line_number = PyInt_AsLong(bp::object(error.attr("lineno")).ptr());
-		long const pos_in_line = PyInt_AsLong(bp::object(error.attr("offset")).ptr());
+  // for some reason, extract<long> does not work while a python error is set, so do it with CPython
+  long const line_number = python_integral_as_long(bp::object(error.attr("lineno")).ptr());
+  long const pos_in_line = python_integral_as_long(bp::object(error.attr("offset")).ptr());
 
-		std::ostringstream message;
-		message << "In module \"" << module_name << "\", line " << line_number << ", position " << pos_in_line << ":\n";
-		message << "Offending code: " << code;
-		message << "                " << std::string(pos_in_line-1, ' ') << "^";
+  std::ostringstream message;
+  message << "In module \"" << module_name << "\", line " << line_number << ", position " << pos_in_line << ":\n";
+  message << "Offending code: " << code;
+  message << "                " << std::string(pos_in_line-1, ' ') << "^";
 
-		return message.str();
-	}
+  return message.str();
+ }
 
-	void throw_syntax_error(exception_info const & exc_info)
-	{
-		throw syntax_error(
-				extract_exception_type(exc_info.type),
-				make_syntax_error_message(exc_info.value),
-				extract_traceback(exc_info.traceback));
-	}
+ void throw_syntax_error(exception_info const & exc_info)
+ {
+  throw syntax_error(
+    extract_exception_type(exc_info.type),
+    make_syntax_error_message(exc_info.value),
+    extract_traceback(exc_info.traceback));
+ }
 
 }
 

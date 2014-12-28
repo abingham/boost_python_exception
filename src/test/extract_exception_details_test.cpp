@@ -81,20 +81,25 @@ BOOST_AUTO_TEST_CASE(exception_returns_type_name)
     std::string const python_code("raise ValueError()");
     test::execute_python_code_in_main_module(python_code, true);
 
-    std::string const expected = "exceptions.ValueError";
-    BOOST_CHECK_EQUAL(expected, bpe::extract_exception_type(bpe::get_exception_info().type));
+    std::ostringstream expected;
+#if PY_MAJOR_VERSION == 2
+    expected << "exceptions.";
+#endif
+    expected << "ValueError";
+    BOOST_CHECK_EQUAL(expected.str(),
+                      bpe::extract_exception_type(bpe::get_exception_info().type));
 }
 
 BOOST_AUTO_TEST_CASE(integer_as_type_throws)
 {
-	boost::python::object const not_an_exception_type(42);
-	BOOST_CHECK_THROW(bpe::extract_exception_type(not_an_exception_type), std::logic_error);
+ boost::python::object const not_an_exception_type(42);
+ BOOST_CHECK_THROW(bpe::extract_exception_type(not_an_exception_type), std::logic_error);
 }
 
 BOOST_AUTO_TEST_CASE(none_as_type_throws)
 {
-	boost::python::object const none;
-	BOOST_CHECK_THROW(bpe::extract_exception_type(none), std::logic_error);
+ boost::python::object const none;
+ BOOST_CHECK_THROW(bpe::extract_exception_type(none), std::logic_error);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -115,11 +120,10 @@ BOOST_AUTO_TEST_CASE(exception_returns_message)
 
 BOOST_AUTO_TEST_CASE(none_returns_string_representation)
 {
-	boost::python::object const none;
+ boost::python::object const none;
 
-	std::string const expected = "None";
-	BOOST_CHECK_EQUAL(expected, bpe::extract_message(none));
+ std::string const expected = "None";
+ BOOST_CHECK_EQUAL(expected, bpe::extract_message(none));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-
