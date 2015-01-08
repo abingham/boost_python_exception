@@ -6,19 +6,19 @@ namespace boost_python_exception {
 
 namespace {
 
-	std::string generate_message(std::string const & type, std::string const & message, traceback const & traceback)
-	{
-		std::ostringstream result;
-		if (not traceback.empty()) {
-			result << "Python traceback (most recent calls last):\n";
-			result << traceback;
-		}
-		result << type;
-		if (not message.empty()) {
-			result << ": " << message;
-		}
-		return result.str();
-	}
+std::string generate_message(std::string const & type, std::string const & message, traceback const & traceback)
+{
+    std::ostringstream result;
+    if (not traceback.empty()) {
+        result << "Python traceback (most recent calls last):\n";
+        result << traceback;
+    }
+    result << type;
+    if (not message.empty()) {
+        result << ": " << message;
+    }
+    return result.str();
+}
 
 }
 

@@ -12,13 +12,13 @@ namespace boost_python_exception { namespace auto_translation {
 
 boost::python::object import(std::string const & module_name)
 {
-	try {
-		return bp::import(module_name.c_str());
-	} catch (bp::error_already_set const &) {
-		exception_info const error = get_exception_info();
-		clear_exception();
-		exception_translator::translate(error);
-	}
+    try {
+        return bp::import(module_name.c_str());
+    } catch (bp::error_already_set const &) {
+        exception_info const error = get_exception_info();
+        clear_exception();
+        exception_translator::translate(error);
+    }
 }
 
 } }

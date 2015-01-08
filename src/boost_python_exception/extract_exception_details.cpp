@@ -40,16 +40,16 @@ traceback extract_traceback(boost::python::object py_traceback)
 
 std::string extract_exception_type(boost::python::object type)
 {
- if (PyExceptionClass_Check(type.ptr())) {
-  return PyExceptionClass_Name(type.ptr());
- } else {
-  throw std::logic_error("Given type is not a standard python exception class");
- }
+    if (PyExceptionClass_Check(type.ptr())) {
+        return PyExceptionClass_Name(type.ptr());
+    } else {
+        throw std::logic_error("Given type is not a standard python exception class");
+    }
 }
 
 std::string extract_message(boost::python::object value)
 {
- return boost::python::extract<std::string>(boost::python::str(value));
+    return boost::python::extract<std::string>(boost::python::str(value));
 }
 
 
